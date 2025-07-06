@@ -1,0 +1,40 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile*
+
+# Python
+.venv
+__pycache__
+*.pyc
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+
+# Sensitive files
+.env
+*.env.*
+!.env.example
+
+# Logs and outputs
+logs/
+output_data/
+
+# Test results
+tests/validation_result.json
+
+# Docs (not needed in image)
+factoring_log.md
+BLUEPRINT.md
+README.md
+tests/*.md
+
+# Deprecated paths
+resources/vector_store/ 
