@@ -1,0 +1,666 @@
+{
+  "personality_dataset.csv": [
+    {
+      "command": "python -m src.main --file \"personality_dataset.csv\" --request \"응답자들의 하루 ‘혼자 보내는 시간’(Time_spent_Alone) 평균은 5시간(μ=5)과 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정 (One-Sample T-Test)",
+      "answer": "* H₀: μ = 5\n* H₁: μ ≠ 5\nt(2476) = –8.30, p = 1.23×10⁻¹¹ < 0.05 → 귀무가설 기각_x000B_→ 평균 혼자 시간은 5시간과 통계적으로 유의미하게 다릅니다.",
+      "response": "- **Shapiro-Wilk Test**:  \n  - Test Statistic: 0.92  \n  - p-value: < 0.001  \n\n- **One-sample T-test**:  \n  - Hypothesized Mean: 5  \n  - Sample Mean: 4.51  \n  - Sample Standard Deviation: 3.44  \n  - T-statistic: -7.73  \n  - p-value: < 0.001  \n  - Cohen's d: -0.14  \n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"personality_dataset.csv\" --request \"‘사회적 활동 후 소진감’(Drained_after_socializing = Yes) 그룹과 ‘아님’ 그룹(No)의 하루 게시 빈도(Post_frequency) 평균에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정 (Independent Samples T-Test)",
+      "answer": "* H₀: μ_Yes = μ_No\n* H₁: μ_Yes ≠ μ_No\nt(2475) = –6.31, p < 0.001 → 귀무가설 기각_x000B_→ 소진감 유무에 따라 게시 빈도 평균이 유의미하게 다릅니다.",
+      "response": "- **Shapiro-Wilk Test (정규성 검정)**\n  - Yes 그룹: Test Statistic = 0.823, p-value = 1.983e-36\n  - No 그룹: Test Statistic = 0.937, p-value = 6.023e-24\n  - 두 그룹 모두 정규성을 따르지 않음.\n- **Levene's Test (분산의 균등성 검정)**\n  - 결과: 비정상적인 데이터로 인해 유의미한 결과를 얻지 못함.\n- **Welch's T-test (그룹 간 평균 비교)**\n  - T-statistic: 유효하지 않은 결과 값 (nan)\n  - P-value: 유효하지 않은 결과 값 (nan)\n- **Cohen's d (효과 크기)**\n  - Cohen's d: -3.257\n  - 큰 효과 크기를 보임.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"personality_dataset.csv\" --request \"같은 응답자의 ‘사회적 행사 참석 횟수’(Social_event_attendance)와 ‘외출 횟수’(Going_outside) 평균에 차이가 있습니까?\"",
+      "tag": "대응표본 T-검정 (Paired Samples T-Test)",
+      "answer": "* H₀: μ_attendance = μ_going_out\n* H₁: 차이가 있다_x000B_t(2476) = –33.20, p ≈ 1.67×10⁻¹¹⁵ < 0.05 → 귀무가설 기각_x000B_→ 참석 횟수와 외출 횟수 평균이 통계적으로 유의미하게 다릅니다.",
+      "response": "- Shapiro-Wilk Test for '사회적 행사 참석 횟수': Test Statistic = 0.9309, p-value = 1.15e-34\n- Shapiro-Wilk Test for '외출 횟수': Test Statistic = 0.9198, p-value = 9.21e-37\n- Levene’s Test for homogeneity of variance: Test Statistic = 227.9974, p-value = 1.48e-50\n- Wilcoxon Signed-Rank Test 선택\n- Cohen's d: 0.3752\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"personality_dataset.csv\" --request \"‘무대 공포증’(Stage_fear: Yes/No)과 ‘사회 후 소진감’(Drained_after_socializing: Yes/No) 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정 (Chi-Squared Test)",
+      "answer": "* H₀: 두 변수는 독립\n* H₁: 독립이 아니다\nχ²(1) = 865.05, p < 0.001 → 귀무가설 기각_x000B_→ 무대 공포증과 사회 후 소진감은 통계적으로 연관되어 있습니다.",
+      "response": "- 카이제곱 독립성 검정: Chi-squared Statistic = 3552.69, p-value < 0.05, Degrees of Freedom = 1\n- Cramér's V = 1.0000 (강한 효과 크기)\n- 표준화된 잔차:\n  - No-무대 공포증 & No-사회 후 소진감: 표준화된 잔차 26.14\n  - No-무대 공포증 & Yes-사회 후 소진감: 표준화된 잔차 -26.34\n  - Yes-무대 공포증 & No-사회 후 소진감: 표준화된 잔차 -26.34\n  - Yes-무대 공포증 & Yes-사회 후 소진감: 표준화된 잔차 26.55\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"personality_dataset.csv\" --request \"성격 유형(Personality: Introvert/Extrovert)에 따라 ‘사회적 행사 참석 횟수’(Social_event_attendance) 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "* H₀: μ_introvert = μ_extrovert\n* H₁: 차이가 있다\nF(1,2475) = 272.16, p < 0.001 → 귀무가설 기각_x000B_→ 성격 유형별 참석 횟수 평균이 통계적으로 유의미하게 다릅니다.",
+      "response": "- Introverts Social Event Attendance Summary:\n  - 평균: 1.78\n  - 표준편차: 1.72\n  - 최소/최대: 0/9\n- Extroverts Social Event Attendance Summary:\n  - 평균: 6.02\n  - 표준편차: 2.21\n  - 최소/최대: 0/10\n- Independent Samples T-test:\n  - t-statistic: nan\n  - p-value: nan\n- Mann-Whitney U test:\n  - U-statistic: nan\n  - p-value: nan\n- Cohen's d: -2.134 (large effect size)\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"personality_dataset.csv\" --request \"친구 수(Friends_circle_size)와 하루 게시 빈도(Post_frequency) 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관계수 유의성 검정",
+      "answer": "* H₀: ρ = 0\n* H₁: ρ ≠ 0\nr = –0.12, p < 0.001 → 귀무가설 기각_x000B_→ 친구 수와 게시 빈도 사이에 통계적으로 유의미한(약한 음의) 상관관계가 있습니다.",
+      "response": "- **Shapiro-Wilk Test for Normality:**\n  - Friends_circle_size: Statistic = 0.932, p-value ≈ 0\n  - Post_frequency: Statistic = 0.905, p-value ≈ 0\n- **Levene's Test for Equal Variances:**\n  - Statistic = 357.37, p-value ≈ 0\n- **Pearson Correlation Coefficient:**\n  - Pearson correlation coefficient = `nan`\n  - P-value = `nan`\n  - Interpretation: Unable to determine due to data issues.\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"personality_dataset.csv\" --request \"전체 응답자 중 ‘내향형’(Personality = Introvert) 비율이 50%입니까?\"",
+      "tag": "단일 비율 검정 (One-Proportion Z-Test)",
+      "answer": "* H₀: p = 0.5\n* H₁: p ≠ 0.5\np̂ = 0.45, z = –1.03, p = 0.154 > 0.05 → 귀무가설 채택_x000B_→ 내향형 비율은 50%와 통계적으로 차이가 없습니다.",
+      "response": "- 총 응답자 수: 2900\n- 내향형 응답자 수: 1409\n- 내향형 비율: 48.59%\n- Z-검정 통계량: -1.5233\n- p-값: 0.1277 (귀무가설을 기각할 통계적 유의 수준인 α = 0.05보다 크므로 귀무가설을 기각하지 않습니다.)\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"personality_dataset.csv\" --request \"‘내향형’ 그룹과 ‘외향형’ 그룹의 친구 수(Friends_circle_size) 분산이 동일합니까?\"",
+      "tag": "등분산성 검정 (Levene's Test)",
+      "answer": "* H₀: 분산이 같다\n* H₁: 분산이 다르다\nW = 167.08, p < 0.001 → 귀무가설 기각_x000B_→ 두 그룹 간 친구 수 분산이 통계적으로 유의미하게 다릅니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"personality_dataset.csv\" --request \"하루 게시 빈도(Post_frequency) 분포는 정규분포를 따릅니까?\"",
+      "tag": "정규성 검정 (Shapiro-Wilk Test)",
+      "answer": "* H₀: 정규분포를 따른다\n* H₁: 따르지 않는다\nW = 0.840, p ≈ 2.82×10⁻¹⁸ < 0.05 → 귀무가설 기각_x000B_→ 게시 빈도 분포는 정규성을 만족하지 않습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"personality_dataset.csv\" --request \"단순선형회귀모델에서 ‘하루 게시 빈도’(Post_frequency)가 ‘친구 수’(Friends_circle_size)를 예측하는 데 유의미한 설명변수입니까?\"",
+      "tag": "회귀계수 유의성 검정",
+      "answer": "* ₀: β₁ = 0\n* H₁: β₁ ≠ 0\nβ₁의 p = 0.000 < 0.05 → 귀무가설 기각_x000B_→ 게시 빈도는 친구 수 예측에 통계적으로 유의미한 설명변수입니다.",
+      "response": "- Shapiro-Wilk Test for 'Post_frequency':\n  - Statistic: nan (결과 불확실)\n- Shapiro-Wilk Test for 'Friends_circle_size':\n  - Statistic: 0.9320\n  - p-value: 4.736e-34 (정규성 가정 위반)\n- Pearson Correlation:\n  - Correlation Coefficient: 0.7079\n- Simple Linear Regression Analysis:\n  - F-statistic: 2771\n  - p-value (F-statistic): 0.00\n  - Coefficient for 'Post_frequency': 1.0412\n  - R-squared: 0.501\n- Correlation between residuals and predicted values: 7.411e-16 (모델 잔차는 예측값과 독립적임을 나타냄)\n```\n================================================================================"
+    }
+  ],
+  "Students Social Media Addiction.csv": [
+    {
+      "command": "python -m src.main --file \"Students Social Media Addiction.csv\" --request \"학생들의 평균 일일 소셜 미디어 사용 시간(Avg_Daily_Usage_Hours)이 3시간(μ₀=3)과 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정 (One-Sample T-Test)",
+      "answer": "* H₀: μ = 3\n* H₁: μ ≠ 3\n* 검정통계량 t = 40.52, p = 3.72×10⁻¹⁸⁶ < 0.05 → 귀무가설 기각\n* 결론: 평균 사용 시간은 3시간과 통계적으로 유의미하게 다릅니다.",
+      "response": "- Shapiro-Wilk Normality Test:  \n  - Test Statistic = 0.9920  \n  - p-value = 0.0008\n- One-Sample T-test:  \n  - t-statistic = 40.5168  \n  - p-value = 3.7203e-186  \n  - Degrees of Freedom = 9  \n- Cohen's d = 0.3295\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"Students Social Media Addiction.csv\" --request \"남학생(Gender = Male)과 여학생(Female)의 중독 점수(Addicted_Score) 평균에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정 (Independent Samples T-Test)",
+      "answer": "* H₀: μ_Male = μ_Female\n* H₁: μ_Male ≠ μ_Female\n* t = –1.32, p = 0.188 > 0.05 → 귀무가설 채택\n* 결론: 성별에 따른 중독 점수 평균 차이는 통계적으로 유의미하지 않습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"Students Social Media Addiction.csv\" --request \"같은 학생의 ‘수면 시간’(Sleep_Hours_Per_Night)과 ‘소셜 미디어 사용 시간’(Avg_Daily_Usage_Hours) 평균에 차이가 있습니까?\"",
+      "tag": "대응표본 T-검정 (Paired Samples T-Test)",
+      "answer": "* H₀: μ_sleep = μ_usage\n* H₁: μ_sleep ≠ μ_usage\n* t = 22.95, p = 1.90×10⁻⁸⁷ < 0.05 → 귀무가설 기각\n* 결론: 수면 시간과 사용 시간 평균이 통계적으로 유의미하게 다릅니다.",
+      "response": "- **Shapiro-Wilk Test for Avg_Daily_Usage_Hours:**\n  - W = 0.9738\n  - p-value = 0.8989\n- **Shapiro-Wilk Test for Sleep_Hours_Per_Night:**\n  - W = 0.9929\n  - p-value = 0.0020\n- **Paired T-test:**\n  - T-statistic = -22.9492\n  - p-value < 0.001\n  - Cohen's d = -1.6335\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"Students Social Media Addiction.csv\" --request \"성별(Gender)과 ‘학업 성과에 영향(Yes/No)’(Affects_Academic_Performance) 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정 (Chi-Squared Test)",
+      "answer": "* H₀: 두 변수는 독립이다\n* H₁: 독립이 아니다\n* χ² = 0.334, p = 0.563 > 0.05 → 귀무가설 채택\n* 결론: 성별과 학업 성과 영향 여부는 통계적으로 독립입니다.",
+      "response": "- Chi-squared 테스트: \n  - 검정 통계량 (Chi-squared Statistic) = 0.334\n  - 자유도 (Degrees of Freedom) = 1\n  - p-value = 0.563\n- 예상 빈도: \n  - Female, No: 126.179\n  - Female, Yes: 226.821\n  - Male, No: 125.821\n  - Male, Yes: 226.179\n- 표준화 잔차 (Standardized Residuals):\n  - Female, No: -0.3720\n  - Female, Yes: 0.2775\n  - Male, No: 0.3725\n  - Male, Yes: -0.2779\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"Students Social Media Addiction.csv\" --request \"연애 상태(Relationship_Status: In Relationship, Single, Complicated)별 중독 점수(Addicted_Score) 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "* H₀: 세 집단의 평균이 같다\n* H₁: 적어도 한 집단 평균이 다르다\n* F = 2.80, p = 0.0613 > 0.05 → 귀무가설 채택\n* 결론: 연애 상태별 중독 점수 평균 차이는 통계적으로 유의미하지 않습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"Students Social Media Addiction.csv\" --request \"일일 사용 시간(Avg_Daily_Usage_Hours)과 중독 점수(Addicted_Score) 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관계수 유의성 검정",
+      "answer": "* H₀: ρ = 0\n* H₁: ρ ≠ 0\n* r = 0.832, p = 4.70×10⁻¹⁸² < 0.05 → 귀무가설 기각\n* 결론: 사용 시간과 중독 점수는 강한 양의 상관관계를 가집니다.",
+      "response": "- Shapiro-Wilk Test for Avg_Daily_Usage_Hours: Statistic = 0.992, p-value = 0.00077\n- Shapiro-Wilk Test for Addicted_Score: Statistic = 0.925, p-value < 0.00001\n- Spearman correlation coefficient: 0.838\n- Spearman p-value: 4.157 × 10^(-187)\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"Students Social Media Addiction.csv\" --request \"전체 학생 중 ‘학업 성과에 영향 있다(Yes)’ 응답 비율이 50%인지 검정하십시오.\"",
+      "tag": "단일 비율 검정 (One-Proportion Z-Test)",
+      "answer": "* H₀: p = 0.5\n* H₁: p ≠ 0.5\n* 관측 비율 p̂ ≈ 0.60, z = 7.12, p = 3.73×10⁻¹⁴ < 0.05 → 귀무가설 기각\n* 결론: 영향 있다고 답한 비율은 50%와 통계적으로 유의미하게 다릅니다.",
+      "response": "- 가설 검정:\n  - 귀무 가설 (H0): 'Yes' 응답 비율이 50%이다.\n  - 대립 가설 (H1): 'Yes' 응답 비율이 50%가 아니다.\n- Z-통계량: 6.32\n- p-값: 2.54e-10\n- 샘플 비율 (p-hat): 64.26%\n- 샘플 크기 (n): 분석에 사용된 데이터셋 전원의 개수 (정확한 수치는 주어지지 않음)\n- 유의수준 (α): 0.05\n- 결론: 귀무 가설을 기각 (p < 0.05), 'Yes' 응답 비율이 통계적으로 유의미하게 50%보다 높음.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"Students Social Media Addiction.csv\" --request \"‘영향 있다(Yes)’ 그룹과 ‘영향 없다(No)’ 그룹 간 수면 시간(Sleep_Hours_Per_Night) 분산이 동일합니까?\"",
+      "tag": "등분산성 검정 (Levene's Test)",
+      "answer": "* H₁: 분산이 다르다\n* W = 25.53, p = 5.57×10⁻⁷ < 0.05 → 귀무가설 기각\n* 결론: 두 그룹의 수면 시간 분산이 통계적으로 유의미하게 다릅니다.",
+      "response": "- 기록 수: 영향 있다(Yes): 0, 영향 없다(No): 0\n- 결측치: 수면 시간 컬럼에는 결측치가 없었습니다.\n- Levene's Test: 통계량 = nan, p-value = nan\n  - 결과: 데이터 부족으로 인해 검정 결과를 확보할 수 없었습니다.\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"Students Social Media Addiction.csv\" --request \"중독 점수(Addicted_Score) 분포는 정규분포를 따릅니까?\"",
+      "tag": "정규성 검정 (Shapiro-Wilk Test)",
+      "answer": "* H₀: 정규분포\n* H₁: 비정규분포\n* W = 0.926, p = 5.46×10⁻¹⁵ < 0.05 → 귀무가설 기각\n* 결론: 중독 점수 분포는 정규성을 만족하지 않습니다.",
+      "response": "- **기본 통계 요약:**\n  - 평균 (Mean): 6.44\n  - 중앙값 (Median): 7.0\n  - 표준편차 (Standard Deviation): 1.59\n\n- **정규성 검정 (Shapiro-Wilk Test):**\n  - 테스트 통계량 (Test Statistic): 0.9246\n  - p-value: 0.0000 (정규성 가정 기각)\n\n- **데이터 변환:**\n  - Box-Cox Transformation: λ = 1.4050\n  - Yeo-Johnson Transformation: λ = 1.5142\n\n- **비모수 분석 추천:** Mann-Whitney U 테스트와 같은 비모수적 방법을 통해 데이터를 분석할 수 있습니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"Students Social Media Addiction.csv\" --request \"단순선형회귀에서 ‘일일 사용 시간’(Avg_Daily_Usage_Hours)이 ‘중독 점수’(Addicted_Score)를 예측하는 데 유의미합니까?\"",
+      "tag": "회귀계수 유의성 검정",
+      "answer": "* H₀: β₁ = 0\n* H₁: β₁ ≠ 0\n* β₁의 p = 4.70×10⁻¹⁸² < 0.05 → 귀무가설 기각\n* 결론: 일일 사용 시간은 중독 점수를 예측하는 유의미한 설명변수입니다.",
+      "response": "- **Shapiro-Wilk Normality Test**:\n  - Avg_Daily_Usage_Hours: Test Statistic = 0.988, p-value = 0.991\n  - Addicted_Score: Test Statistic = 0.976, p-value = 0.942\n- **선형회귀 분석 결과**:\n  - 회귀계수 (Avg_Daily_Usage_Hours): 1.0502, p < 0.0001\n  - 절편 (Intercept): 1.2712, p < 0.0001\n- **모형 적합도**:\n  - R-squared = 0.692\n  - F-statistic = 1581, Prob(F-statistic) < 0.0001\n- **효과 크기**:\n  - Standardized Coefficient (Effect Size) = 0.832\n- **잔차와 적합값의 상관관계**:\n  - Correlation = 2.16532e-16 (잔차의 독립성 및 등분산성 가정 충족 확인)\n================================================================================"
+    }
+  ],
+  "migraine_symptom_classification.csv": [
+    {
+      "command": "python -m src.main --file \"migraine_symptom_classification.csv\" --request \"응답자의 연령(Age) 평균은 45세(μ₀＝45)와 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정 (One-Sample T-Test)",
+      "answer": "* H₀: μ = 45\n* H₁: μ ≠ 45\n* 검정통계량 t = –20.30, p = 2.08×10⁻⁷⁰ < 0.05 → 귀무가설 기각\n* 결론: 응답자의 평균 연령은 45세와 통계적으로 유의미하게 다릅니다.",
+      "response": "- **Shapiro-Wilk Normality Test**: \n  - W-statistic = 0.930, p-value = 9.65e-13 \n  - 데이터가 정규 분포를 따르지 않음을 나타냄 (p < 0.05).\n  \n- **One-Sample T-Test**: \n  - t-statistic = 4.36, p-value = 3.16e-05\n  - 평균 45세와의 차이가 통계적으로 유의미함 (p < 0.05).\n  \n- **Cohen's d**: \n  - 0.44 (중간 정도의 효과 크기).\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"migraine_symptom_classification.csv\" --request \"메스꺼움 유무(Nausea: 1=Yes, 0=No)에 따라 통증 강도(Intensity, 1–5 척도) 평균에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정 (Independent Samples T-Test)",
+      "answer": "* H₀: μ₁ = μ₀ (Yes 그룹 = No 그룹)\n* H₁: μ₁ ≠ μ₀\n* 검정통계량 t = 0.11, p = 0.912 > 0.05 → 귀무가설 채택\n* 결론: 메스꺼움 유무에 따른 통증 강도 평균 차이는 통계적으로 유의미하지 않습니다.",
+      "response": "- **Shapiro-Wilk Test**\n  - 메스꺼움 있는 그룹 (`Nausea = 1`): Test Statistic = 0.6671, p-value = <0.01 (정규성 가정 위배)\n  - 메스꺼움 없는 그룹 (`Nausea = 0`): Test Statistic = 0.5522, p-value = <0.01 (정규성 가정 위배)\n\n- **Levene's Test**\n  - Test Statistic: 0.0419, p-value: 0.8379 (분산의 동질성 가정 충족)\n\n- **Independent Samples T-test**\n  - T-statistic: -0.2047, P-value: 0.8379 (통계적 유의성 미충족)\n  - Cohen's d: 계산에 실패함\n\n- **Mann-Whitney U Test**\n  - U Statistic: 849.5, P-Value: 0.5380 (통계적 유의성 미충족)\n  \n위 결과는 통증 강도에 대한 효과적 관리가 다른 변수에 의해 더 잘 설명될 수 있음을 시사합니다. 추가 연구가 필요할 수 있습니다.\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"migraine_symptom_classification.csv\" --request \"같은 환자의 발작 지속 시간(Duration, 분)과 통증 강도(Intensity) 평균에 차이가 있습니까?\"",
+      "tag": "대응표본 T-검정 (Paired Samples T-Test)",
+      "answer": "* H₀: μ_Duration = μ_Intensity\n* H₁: μ_Duration ≠ μ_Intensity\n* 검정통계량 t = −11.57, p = 7.62×10⁻⁴⁶ < 0.05 → 귀무가설 기각\n* 결론: Duration과 Intensity 평균이 통계적으로 유의미하게 다릅니다.",
+      "response": "- **정규성 검사 (Shapiro-Wilk Test)**\n  - Duration: 통계값 = 0.7197, p-value = 2.30e-25\n  - Intensity: 통계값 = 0.6654, p-value = 2.58e-27\n  - 결과: 두 변수 모두 정규분포를 따르지 않음.\n  \n- **분산의 동질성 검사 (Levene's Test)**\n  - Test Statistic: 2.16\n  - p-value: 0.142\n  - 결과: Duration과 Intensity의 분산은 동질적임 (p >= 0.05).\n\n- **대응 표본 T-검정 (Paired T-test)**\n  - T-statistic: -16.23\n  - P-value: 7.62e-46\n  - Cohen's d: -1.12\n  - 결과: Duration과 Intensity 간 차이는 매우 유의미함 (p < 0.05), 큰 효과 크기.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"migraine_symptom_classification.csv\" --request \"편두통 유형(Type)과 구토 유무(Vomit: 1=Yes, 0=No) 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정 (Chi-Squared Test)",
+      "answer": "* H₀: 두 변수는 독립이다\n* H₁: 독립이 아니다\n* χ² = 39.10, p = 1.51×10⁻⁵ < 0.05 → 귀무가설 기각\n* 결론: 특정 편두통 유형에 따라 구토 유무가 통계적으로 유의미하게 다릅니다.",
+      "response": "- Chi-squared Test:\n  - Chi-squared Statistic: 32.17\n  - p-value: 1.514e-05\n  - Degrees of Freedom: 6\n\n- Cramér's V (Effect Size):\n  - Cramér's V: 0.0593 (작은 효과)\n\n- 표준화된 잔차 (Standardized Residuals):\n  - 'Migraine without aura' and Vomit = 1: 3.785 (예상 이상의 구토 빈도)\n  - 'Typical aura with migraine' and Vomit = 0: 1.442 (예상 이상의 구토 미발생)\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"migraine_symptom_classification.csv\" --request \"편두통 유형(Type)별로 통증 강도(Intensity) 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "* H₀: 모든 유형의 μ_Intensity가 같다\n* H₁: 적어도 하나의 유형 μ_Intensity가 다르다\n* F = 12.34, p = 1.19×10⁻⁸² < 0.05 → 귀무가설 기각\n* 결론: 편두통 유형별로 Intensity 평균이 통계적으로 유의미하게 다릅니다.",
+      "response": "- **Shapiro-Wilk Normality Test:** 'Typical aura with migraine' (W = 0.6672, p < 0.0001), 'Typical aura without migraine' (W = 1.0000, p = 1.0000)\n- **Levene's Test for Homogeneity of Variances:** F-statistic = ∞, p-value = 0.0 (단, 분산의 차이 존재)\n- **One-way ANOVA:** F-statistic = 111.47, p-value < 0.001, df = (6, 393)\n- **Tukey's HSD Test:**\n  - 'Basilar-type aura' vs 'Sporadic hemiplegic migraine': meandiff = -0.746, p < 0.001\n  - 'Typical aura with migraine' vs 'Typical aura without migraine': meandiff = -2.4899, p < 0.001\n- **Effect Size (Eta Squared):** 용형 효과 크기는 0.63 (큰 효과)으로 나타났습니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"migraine_symptom_classification.csv\" --request \"연령(Age)과 통증 강도(Intensity) 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관계수 유의성 검정",
+      "answer": "* H₀: ρ = 0\n* H₁: ρ ≠ 0\n* Pearson r = –0.10, p = 0.0225 < 0.05 → 귀무가설 기각\n* 결론: 연령이 증가할수록 Intensity가 약간 감소하는 통계적으로 유의미한 음의 상관관계가 있습니다.",
+      "response": "- **Pearson Correlation:**\n  - 상관계수(Correlation Coefficient): 0.114\n  - 유의 확률(P-value): 0.02255\n  - 결론: 상관관계는 통계적으로 유의미함\n- **Shapiro-Wilk Normality Tests:**\n  - Age: 통계량 = 0.9300, p-value = 9.65e-13, 정규성 가정 없음\n  - Intensity: 통계량 = 0.6654, p-value = 2.58e-27, 정규성 가정 없음\n- **Spearman Correlation:**\n  - 상관계수(Correlation Coefficient): 0.088\n  - 유의 확률(P-value): 0.0775\n  - 결론: 통계적으로 유의미하지 않음\n\n이 통계적 분석 결과를 바탕으로, 추가적인 연구와 함께 연령에 따른 통증 강도의 세밀한 변화를 평가할 수 있는 다양한 접근법을 추천합니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"migraine_symptom_classification.csv\" --request \"전체 응답자 중 광선공포증(Photophobia=1) 경험 비율은 80%입니까?\"",
+      "tag": "단일 비율 검정 (One-Proportion Z-Test)",
+      "answer": "* H₀: p = 0.80\n* H₁: p ≠ 0.80\n* 관측 비율 p̂ ≈ 0.98, z = 10.54, p < 0.001 → 귀무가설 기각\n* 결론: Photophobia 경험 비율은 80%보다 통계적으로 유의미하게 높습니다.",
+      "response": "- 총 응답자수: 400\n- 광선공포증을 경험한 응답자수: 392\n- 샘플 비율: 0.9800\n- 귀무 가설 비율: 0.80\n- Z-통계량: 25.7143\n- P-값: 0.0000\n- 결론: 귀무 가설을 기각합니다. 광선공포증의 비율은 80%와 통계적으로 유의미하게 다릅니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"migraine_symptom_classification.csv\" --request \"Photophobia 유무(Photophobia=1 vs 0)에 따라 발작 빈도(Frequency) 분산이 동일합니까?\"",
+      "tag": "등분산성 검정 (Levene's Test)",
+      "answer": "* H₀: 두 그룹 분산이 같다\n* H₁: 분산이 다르다\n* Levene W = 1.02, p = 0.312 > 0.05 → 귀무가설 채택\n* 결론: Photophobia 여부에 따른 Frequency 분산 차이는 통계적으로 유의미하지 않습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"migraine_symptom_classification.csv\" --request \"발작 빈도(Frequency, 회/월) 분포는 정규분포를 따릅니까?\"",
+      "tag": "정규성 검정 (Shapiro-Wilk Test)",
+      "answer": "* H₀: 정규분포\n* H₁: 비정규분포\n* Shapiro-Wilk W = 0.82, p = 4.90×10⁻²³ < 0.05 → 귀무가설 기각\n* 결론: Frequency 분포는 정규성을 만족하지 않습니다.",
+      "response": "- **Shapiro-Wilk Test:**\n  - Test Statistic: 0.775\n  - p-value: 4.899 x 10^-23\n  - Conclusion: 발작 빈도가 정규분포를 따르지 않습니다.\n  \n- **데이터 분포 통계량:**\n  - Mean: 2.365\n  - Standard Deviation: 1.676\n  - Minimum: 1\n  - 25% Percentile: 1\n  - Median (50% Percentile): 2\n  - 75% Percentile: 4\n  - Maximum: 8\n\n- **Skewness and Kurtosis:**\n  - Skewness: 0.968\n  - Kurtosis: -0.324\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"migraine_symptom_classification.csv\" --request \"단순선형회귀모델에서 ‘발작 지속 시간’(Duration)이 ‘발작 빈도’(Frequency)를 예측하는 데 유의미합니까?\"",
+      "tag": "회귀계수 유의성 검정",
+      "answer": "* H₀: β₁ = 0\n* H₁: β₁ ≠ 0\n* β₁의 p = 0.00277 < 0.05 → 귀무가설 기각\n* 결론: Duration은 Frequency 예측에 통계적으로 유의미한 설명변수입니다.",
+      "response": "- **회귀 분석 결과:**\n  - R-squared: 0.02227\n  - Coefficient (Duration): 0.32442\n  - P-value (Duration): 0.00277\n  - Standard Error (Duration): 0.10774\n  - F-statistic: 9.06640\n  - Model P-value: 0.00277\n- **반응 변수와 설명 변수의 상관관계:**\n  - Pearson Correlation: 0.14924, P-value: 0.00277\n- **잔차 분석:**\n  - 잔차의 Shapiro-Wilk Test: p-value = 1.7210863542451167e-19, 정상성 가정 위배\n  - Levene’s Test for homogeneity of variance: p-value = 1.2497997746527045e-23, 등분산성 가정 위배\n- **Cohen's f-squared 효과 크기:**\n  - Cohen's f-squared: 0.0228 (작은 효과 크기)\n================================================================================"
+    }
+  ],
+  "remote_worker_productivity_1000.csv": [
+    {
+      "command": "python -m src.main --file \"remote_worker_productivity_1000.csv\" --request \"원격 근무자의 평균 일일 근무 시간(average_daily_work_hours)은 8시간과 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정 (One-Sample T-Test)",
+      "answer": "* H₀: μ = 8\n* H₁: μ ≠ 8:_x000B_t(999) = –13.42, p ≈ 6.83×10⁻³⁸ < 0.05 → 귀무가설 기각_x000B_→ 평균 일일 근무 시간은 8시간과 유의미하게 다릅니다.",
+      "response": "- **Shapiro-Wilk Normality Test**: \n  - Test Statistic: 0.998\n  - p-value: 0.497\n- **One-sample T-test**:\n  - T-statistic: -13.423\n  - p-value: 6.8328e-38\n- **Effect Size** (Cohen's d):\n  - Cohen's d: -0.424\n\nNote: 분석에서 검토한 코드는 통계적 유의미성을 고려하며, 일반적으로 95% 신뢰 수준 (p < 0.05)을 채택하였습니다. 결과의 해석은 일일 평균 근무 시간이 8시간보다 유의하게 작다는 점을 지목합니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"remote_worker_productivity_1000.csv\" --request \"AI 보조 계획(AI_assisted_planning=1) 사용 그룹과 비사용 그룹 간 업무 완료율(task_completion_rate) 평균에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정 (Independent Samples T-Test)",
+      "answer": "* H₀: μ_AI=1 = μ_AI=0\n* H₁: μ_AI=1 ≠ μ_AI=0\nt = 1.145, p = 0.253 > 0.05 → 귀무가설 채택_x000B_→ AI 보조 계획 사용 여부에 따른 업무 완료율 평균 차이는 유의미하지 않습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"remote_worker_productivity_1000.csv\" --request \"같은 근무자의 ‘캘린더 예약 사용 시간’(calendar_scheduled_usage)과 ‘실제 집중 시간’(focus_time_minutes) 평균에 차이가 있습니까?\"",
+      "tag": "대응표본 T-검정 (Paired Samples T-Test)",
+      "answer": "* H₀: μ_calendar = μ_focus\n* H₁: μ_calendar ≠ μ_focus\nt(999) = –72.52, p < 0.001 → 귀무가설 기각_x000B_→ 캘린더 예약 시간과 실제 집중 시간 평균에 통계적으로 유의미한 차이가 있습니다.",
+      "response": "- 모든 근무자에 대해 Wilcoxon 부호 순위 검정: 통계량 = 0.0000, p값 = 1.0000\n- 전체 데이터에 대한 쌍체 T-검정: 통계량 = -2.345, p값 = 0.034\n- Cohen's d (쌍체 검정 효과 크기): 0.167\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"remote_worker_productivity_1000.csv\" --request \"근무 위치 유형(location_type: Home/Co-working/Hybrid)과 생산성 레이블(productivity_label: Low/Medium/High) 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정 (Chi-Squared Test)",
+      "answer": "* H₀: 두 변수는 독립이다\n* H₁: 독립이 아니다_x000B_χ²(4) = 4.17, p = 0.383 > 0.05 → 귀무가설 채택_x000B_→ 위치 유형과 생산성 레이블은 통계적으로 독립입니다.",
+      "response": "- 카이제곱 검정: \n  - 검정 통계량 (Chi-squared statistic) = 4.17\n  - 자유도 (Degrees of freedom) = 4\n  - 유의확률 (p-value) = 0.383\n- Cramér's V 계산 필요 없음 (p-value > 0.05)\n- 표준화 잔차:\n  - City-High: 1.18, City-Low: -0.79, City-Medium: -0.39\n  - Town-High: -0.63, Town-Low: 0.87, Town-Medium: -0.25\n  - Village-High: -0.60, Village-Low: -0.05, Village-Medium: 0.66\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"remote_worker_productivity_1000.csv\" --request \"산업 분야(industry_sector)별 도구 사용 빈도(tool_usage_frequency) 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "* H₀: 모든 분야의 μ_tool_usage가 같다\n* H₁: 적어도 하나의 분야가 다르다\nF = 0.290, p = 0.885 > 0.05 → 귀무가설 채택_x000B_→ 산업 분야별로 도구 사용 빈도 평균에 통계적으로 유의미한 차이가 없습니다.",
+      "response": "- **정규성 검정 (Shapiro-Wilk Test):**\n  - Education: W = 0.9196, p = 0.0000\n  - Finance: W = 0.9278, p = 0.0000\n  - Healthcare: W = 0.9596, p = 0.0000\n  - IT: W = 0.9479, p = 0.0000\n  - Retail: W = 0.9409, p = 0.0000\n\n- **분산의 균일성 검정 (Levene's Test):**\n  - Levene's Test Statistic = 5.634e+27, p < 0.0001\n\n- **일원분산분석 (ANOVA):**\n  - F-statistic = 0.29, p = 0.88\n\n- **다중 비교 분석 (Tukey HSD):**\n  - 모든 산업 쌍간 유의적 차이 없음 (p > 0.05)\n\n- **효과 크기 (Effect Size, eta squared):**\n  - η² = 0.0012\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"remote_worker_productivity_1000.csv\" --request \"연령(age)과 하루 휴식 횟수(break_frequency_per_day) 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관계수 유의성 검정",
+      "answer": "* H₀: ρ = 0\n* H₁: ρ ≠ 0\nr = –0.010, p = 0.750 > 0.05 → 귀무가설 채택_x000B_→ 연령과 휴식 횟수 간 선형 상관관계는 유의미하지 않습니다.",
+      "response": "- **Shapiro-Wilk Test for Normality:**\n  - Age: Test Statistic = 0.9548, p-value = 5.31e-17\n  - Break Frequency: Test Statistic = 0.8820, p-value = 6.90e-27\n- **Correlation Test (Spearman):**\n  - Correlation Coefficient: -0.0106\n  - p-value: 0.737\n  - Interpretation: No significant relationship between age and break frequency per day (p > 0.05).\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"remote_worker_productivity_1000.csv\" --request \"전체 원격 근무자 중 생산성 레이블 ‘High’ 비율이 30%입니까?\"",
+      "tag": "단일 비율 검정 (One-Proportion Z-Test)",
+      "answer": "* H₀: p = 0.30\n* H₁: p ≠ 0.30\n관측 비율 p̂ = 333/1000 = 0.333, z = 2.277, p = 0.0228 < 0.05 → 귀무가설 기각_x000B_→ ‘High’ 비율은 30%와 통계적으로 유의미하게 다릅니다.",
+      "response": "- One-sample proportion Z-test:\n  - Z-statistic = 1.0483\n  - P-value = 0.2945\n  - Observed Proportion: 0.35\n  - Hypothesized Proportion: 0.30\n  - 결과: 0.05 수준에서 유의미하지 않음 (결론적으로 귀무가설 기각 실패)\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"remote_worker_productivity_1000.csv\" --request \"AI 보조 계획 사용 그룹과 비사용 그룹 간 late_task_ratio 분산이 동일합니까?\"",
+      "tag": "등분산성 검정 (Levene's Test)",
+      "answer": "* H₀: 두 그룹 분산이 같다\n* H₁: 분산이 다르다\nW = 0.547, p = 0.460 > 0.05 → 귀무가설 채택_x000B_→ late_task_ratio 분산은 그룹 간 차이가 없습니다.",
+      "response": "- **Levene's Test for Equality of Variances**\n  - Test Statistic: 0.5470\n  - p-value: 0.4597\n- **F-test for Variances**\n  - Test Statistic: 0.7343\n  - p-value: 0.3917\n- **Shapiro-Wilk Test for Normality (AI Assisted Group)**\n  - Test Statistic: 0.9414\n  - p-value: 3.289e-13\n- **Shapiro-Wilk Test for Normality (Non-Assisted Group)**\n  - Test Statistic: 0.9398\n  - p-value: 2.748e-13\n- 결론적으로, 각 그룹의 자료는 정규 분포를 따르지 않았으나, Levene's Test 결과 두 그룹의 분산이 유의미하게 다르지 않음을 확인했습니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"remote_worker_productivity_1000.csv\" --request \"‘실시간 피드백 점수’(real_time_feedback_score) 분포는 정규분포를 따릅니까?\"",
+      "tag": "정규성 검정 (Shapiro-Wilk Test)",
+      "answer": "* H₀: 정규분포\n* H₁: 비정규분포\nW = 0.959, p ≈ 1.56×10⁻¹⁰ < 0.05 → 귀무가설 기각_x000B_→ 실시간 피드백 점수 분포는 정규성을 만족하지 않습니다.",
+      "response": "- **원본 데이터의 Shapiro-Wilk 정규성 테스트:**\n  - 테스트 통계량: 0.9581\n  - p-값: 2.62e-16\n  - 결론: 정규분포를 따르지 않음 (p < 0.05).\n\n- **로그 변환 후 Shapiro-Wilk 정규성 테스트:**\n  - 테스트 통계량: 0.9557\n  - p-값: 8.06e-17\n  - 결론: 정규분포를 따르지 않음 (p < 0.05).\n\n- **제곱근 변환 후 Shapiro-Wilk 정규성 테스트:**\n  - 테스트 통계량: 0.9585\n  - p-값: 3.08e-16\n  - 결론: 정규분포를 따르지 않음 (p < 0.05).\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"remote_worker_productivity_1000.csv\" --request \"단순선형회귀모델에서 ‘도구 사용 빈도’(tool_usage_frequency)가 ‘생산성 점수’(productivity_score)를 예측하는 데 유의미합니까?\"",
+      "tag": "회귀계수 유의성 검정",
+      "answer": "* H₀: β₁ = 0\n* H₁: β₁ ≠ 0\nβ₁의 p = 8.41×10⁻⁹ < 0.05 → 귀무가설 기각_x000B_→ 도구 사용 빈도는 생산성 점수 예측에 통계적으로 유의미한 설명변수입니다.",
+      "response": "- **회귀 분석 결과**:\n  - 상수 (Intercept): 36.5637 (p < 0.000001)\n  - 도구 사용 빈도 계수 (tool_usage_frequency Coefficient): 0.2685 (p < 0.000001)\n  - 결정 계수 (R-squared): 0.033\n- **정규성 검정 (Shapiro-Wilk Test)**:\n  - tool_usage_frequency: p < 0.000001\n  - productivity_score: p < 0.000001\n  - 잔차 (Residuals): p < 0.05 (정규성을 만족하지 않음)\n- **등분산성 검정 (Breusch-Pagan Test)**:\n  - p-value: < 0.05 (등분산성을 만족하지 않음)\n================================================================================"
+    }
+  ],
+  "addiction_population_data.csv": [
+    {
+      "command": "python -m src.main --file \"addiction_population_data.csv\" --request \"응답자의 평균 수면 시간(sleep_hours)은 7시간(μ₀ = 7)과 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정 (One-Sample T-Test)",
+      "answer": "* H₀: μ = 7\n* H₁: μ ≠ 7\n* t(2999) = –19.39, p = 5.16×10⁻⁷⁹ < 0.05 → 귀무가설 기각\n* 결론: 평균 수면 시간은 7시간과 통계적으로 유의미하게 다릅니다.",
+      "response": "- Shapiro-Wilk Test: Test statistic = 0.999, p-value = 0.14\n- One-Sample T-test: T-statistic = -19.39, p-value = 5.16e-79\n- Wilcoxon Signed-Rank Test: Test statistic = 1303661.5, p-value = 1.74e-74\n- Cohen's d: -0.35 (medium effect size)\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"addiction_population_data.csv\" --request \"‘운동 빈도’가 Daily인 그룹과 Never인 그룹의 연간 소득(annual_income_usd) 평균에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정 (Independent Samples T-Test)",
+      "answer": "* H₀: μ_Daily = μ_Never\n* H₁: μ_Daily ≠ μ_Never\n* t(민감도≈) = 2.23, p = 0.026 < 0.05 → 귀무가설 기각\n* 결론: 매일 운동하는 그룹의 소득이 전혀 운동하지 않는 그룹과 통계적으로 유의미하게 다릅니다.",
+      "response": "- **Shapiro-Wilk Normality Test**:\n  - Daily 그룹: 통계량 = 0.9231, p-value = 0.4633\n  - Never 그룹: 통계량 = 0.9632, p-value ≈ 0.0000\n- **Levene's Test for Homogeneity of Variances**:\n  - 통계량 = 11.719, p-value = 0.0006\n- **Independent T-test (Welch's Correction Used)**:\n  - T-statistic = 1.4487, p-value = 0.1490\n- **Cohen's d (Effect Size for Annual Income Difference)**:\n  - Cohen's d = 2.4015\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"addiction_population_data.csv\" --request \"같은 응답자의 ‘흡연 시작 연령’(age_started_smoking)과 ‘음주 시작 연령’(age_started_drinking) 평균에 차이가 있습니까?\"",
+      "tag": "대응표본 T-검정 (Paired Samples T-Test)",
+      "answer": "* H₀: μ(smoking_start) = μ(drinking_start)\n* H₁: 차이가 있다\n* t = –0.71, p = 0.4806 > 0.05 → 귀무가설 채택\n* 결론: 흡연과 음주 시작 연령의 평균 차이는 통계적으로 유의미하지 않습니다.",
+      "response": "- **Shapiro-Wilk Test for Normality**\n  - '흑연 시작 연령': Statistic = 0.9495, p-value = 6.006e-31 (정규성 X)\n  - '음주 시작 연령': Statistic = 0.9501, p-value = 8.611e-31 (정규성 X)\n\n- **Wilcoxon Signed-Rank Test**\n  - Test Statistic = 2090447.5, p-value = 0.428\n\n- **Effect Size (Cohen's d)**\n  - Cohen's d = -0.0129 (매우 작거나 무시할 수 있는 차이)\n\n이 결과들을 바탕으로, '흡연 시작 연령'과 '음주 시작 연령'에서는 기저 수준에서의 평균 차이가 통계적으로 유의미하지 않으며, 두 개의 시작 연령은 실질적인 차이가 거의 없음을 알 수 있습니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"addiction_population_data.csv\" --request \"정신 건강 상태(mental_health_status: Poor/Average/Good)와 치료 이력(therapy_history: None/Past/Current) 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정 (Chi-Squared Test)",
+      "answer": "* H₀: 두 변수는 독립이다\n* H₁: 독립이 아니다\n* χ²(4) = 9.606, p = 0.0476 < 0.05 → 귀무가설 기각\n* 결론: 정신 건강 상태에 따라 치료 이력 분포가 통계적으로 유의미하게 다릅니다.",
+      "response": "- Chi-squared Test of Independence:\n  - Chi-squared Test Statistic: 6.25\n  - P-value: 0.18123985119655553\n  - Degrees of Freedom: 4\n  - Effect Size (Cramér's V): 0.162\n- Expected Frequencies Validity: 모든 셀이 5 이상으로 유효함.\n\n- Standardized Residuals:\n  - 최대 잔차: 4.24 (Poor, Current Therapy)\n  - 최소 잔차: -3.36 (Good, Current Therapy)\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"addiction_population_data.csv\" --request \"고용 상태(employment_status: Employed/Unemployed/Student/…)별 평균 수면 시간(sleep_hours)에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "* H₀: 모든 집단의 μ_sleep이 같다\n* H₁: 적어도 한 집단의 μ_sleep이 다르다\n* F(…, …)=2.688, p = 0.0297 < 0.05 → 귀무가설 기각\n* 결론: 고용 상태별로 평균 수면 시간이 통계적으로 유의미하게 다릅니다.",
+      "response": "- **샤피로 윌크 검정 (정규성 테스트)**:\n  - Employed: 통계량 = 0.9950, p-value = 0.0555\n  - Unemployed: 통계량 = 0.9974, p-value = 0.4509\n  - Student: 통계량 = 0.9971, p-value = 0.3986\n  - Self-Employed: 통계량 = 0.9967, p-value = 0.2257\n  - Retired: 통계량 = 0.9982, p-value = 0.8100\n\n- **레빈의 분산 동질성 검정**:\n  - 통계량 = 1.8091, p-value = 0.1242\n\n- **일원분산분석 (ANOVA)**:\n  - F-statistic = 3.1111, p-value = 0.2527\n\n- **Tukey HSD 사후 검정**:\n  - Employed vs. Self-Employed: 통계적으로 유의미한 차이; 평균 차이 = -0.2652, p-value = 0.0172\n\n- **에타 제곱 (Effect Size)**:\n  - Eta Squared = 0.0036\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"addiction_population_data.csv\" --request \"주당 음주량(drinks_per_week)과 하루 흡연량(smokes_per_day) 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관계수 유의성 검정",
+      "answer": "* H₀: ρ = 0\n* H₁: ρ ≠ 0\n* r = –0.016, p = 0.3810 > 0.05 → 귀무가설 채택\n* 결론: 음주량과 흡연량 간 선형 상관관계는 통계적으로 유의미하지 않습니다.",
+      "response": "- **Shapiro-Wilk Normality Test for 'smokes_per_day':**\n  - W-statistic = 0.908, p-value = 0.421\n- **Shapiro-Wilk Normality Test for 'drinks_per_week':**\n  - W-statistic = 0.957, p-value = 0.799\n- **Levene's Test for Equality of Variances:**\n  - Test Statistic = 286.221, p-value < 0.001 (분산이 같지 않음)\n- **Pearson Correlation Test:**\n  - Correlation Coefficient = -0.016, p-value = 0.381\n- **Spearman Correlation Test:**\n  - Correlation Coefficient = -0.012, p-value = 0.527\n\n이상 분석 결과를 종합해 보면, 양 변수 사이에는 측정 가능한 유의미한 관계가 없음을 알 수 있습니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"addiction_population_data.csv\" --request \"전체 응답자 3000명 중 Current 상태인 치료 이력(therapy_history = Current)의 비율이 20%입니까?\"",
+      "tag": "단일 비율 검정 (One-Proportion Z-Test)",
+      "answer": "* H₀: p = 0.20\n* H₁: p ≠ 0.20\n* 관측 n = 3000, k = 976 → p̂ ≈ 0.3253\n* z = 17.162, p ≈ 0.000 < 0.05 → 귀무가설 기각\n* 결론: 치료 이력이 Current인 비율은 20%와 통계적으로 유의미하게 다릅니다.",
+      "response": "- **Z-test for Proportion**:\n  - Z-statistic: 5.5\n  - p-value: 0.01\n  - 검정 결과는 통계적으로 유의미하며, 이는 실제 포함되는 비율이 가설된 20%와 다름을 강하게 뒷받침합니다.\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"addiction_population_data.csv\" --request \"치료 이력(therapy_history: Current vs None) 그룹 간 연간 소득(annual_income_usd) 분산이 동일합니까?\"",
+      "tag": "등분산성 검정 (Levene's Test)",
+      "answer": "* H₀: 두 집단 분산이 같다\n* H₁: 분산이 다르다\n* W = 3.54, p = 0.0602 > 0.05 → 귀무가설 채택\n* 결론: 치료 이력 그룹 간 소득 분산 차이는 통계적으로 유의미하지 않습니다.",
+      "response": "- Levene's Test for Homogeneity of Variances: Statistic = 2.65, p-value = 0.035\n  - 결론: 유의미한 분산 차이가 있음 (p < 0.05)\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"addiction_population_data.csv\" --request \"자녀 수(children_count) 분포는 정규분포를 따릅니까?\"",
+      "tag": "정규성 검정 (Shapiro-Wilk Test)",
+      "answer": "* H₀: 정규분포\n* H₁: 비정규분포\n* W = 0.907, p = 5.98×10⁻¹⁷ < 0.05 → 귀무가설 기각\n* 결론: 자녀 수 분포는 정규성을 만족하지 않습니다.",
+      "response": "- 샤피로-윌크 검정:\n  - 검정 통계량: 0.905\n  - p-value: 1.093e-39\n- 변환 후 샤피로-윌크 검정:\n  - 로그 변환 p-value: 1.454e-44\n  - 제곱근 변환 p-value: 9.117e-46\n- 기본 통계량:\n  - 평균: 2.45\n  - 표준편차: 1.70\n  - 왜도: 0.046\n  - 첨도: -1.28\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"addiction_population_data.csv\" --request \"단순선형회귀모델에서 주당 음주량(drinks_per_week)이 연간 소득(annual_income_usd)을 예측하는 데 유의미합니까?\"",
+      "tag": "회귀계수 유의성 검정",
+      "answer": "* 모형: annual_income_usd = β₀ + β₁·drinks_per_week + ε\n* H₀: β₁ = 0\n* H₁: β₁ ≠ 0\n* β₁의 p = 0.4245 > 0.05 → 귀무가설 채택\n* 결론: 주당 음주량은 연간 소득 예측에 통계적으로 유의미하지 않습니다.",
+      "response": "- **Shapiro-Wilk Normality Test for 'annual_income_usd':**\n  - Test statistic: 0.956\n  - p-value: 3.703e-29\n  - Conclusion: 데이터는 정규 분포를 따르지 않음\n- **Shapiro-Wilk Normality Test for 'drinks_per_week':**\n  - Test statistic: 0.970\n  - p-value: 9.258e-25\n  - Conclusion: 데이터는 정규 분포를 따르지 않음\n- **Pearson Correlation:**\n  - Coefficient: -0.0146\n  - p-value: N/A (결과가 보정되지 않음)\n- **OLS Regression Analysis:**\n  - Coefficient for 'drinks_per_week': -568.6\n  - p-value for 'drinks_per_week': 0.259\n  - R-squared: 0.000\n  - Conclusion: 주당 음주량은 연간 소득의 유의한 예측변수가 아님\n- **Breusch-Pagan Test for Homoscedasticity:**\n  - Lagrange multiplier statistic: 5.899e-06\n  - p-value: 0.998\n- **Durbin-Watson Statistic for Autocorrelation:**\n  - Statistic: 1.999\n```\n\n================================================================================"
+    }
+  ],
+  "ecommerce_customer_behavior.csv": [
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"고객들의 평균 월 지출액이 250달러와 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정",
+      "answer": "고객들의 평균 월 지출액은 250달러보다 통계적으로 유의미하게 높습니다(평균 258.2달러).",
+      "response": "- Shapiro-Wilk Test: Data not normally distributed (p-value = 0.0089)\n- One-Sample t-test: t-statistic = 6.504, p-value = 6.20e-10\n- Effect Size (Cohen's d): 0.46, indicating a small effect\n- 통계적 유의성: 통계적으로 유의미한 차이 (p < 0.05)\n- 실질적 관련성: 효착의 크기는 작음\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"모바일 사용자와 비사용자 간 고객 만족도에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정",
+      "answer": "모바일 사용자의 고객 만족도가 비사용자보다 통계적으로 유의미하게 높습니다.",
+      "response": "- Shapiro-Wilk Test (모바일 사용자): 통계량 = 0.8935, p-value = 0.0081\n- Shapiro-Wilk Test (비모바일 사용자): 통계량 = 0.9858, p-value = 0.9809\n- Levene's Test for Homogeneity of Variance: Statistic = 11.0667, p-value = 0.0017\n- Independent Samples T-test: 통계량 = 10.6733, p-value = 2.8732e-14\n- Cohen's d: 3.0409\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"교육 수준(Bachelor/Master/PhD)에 따라 월 지출액 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "교육 수준별 월 지출액 평균이 통계적으로 유의미하게 다릅니다(PhD > Master > Bachelor).",
+      "response": "- **Shapiro-Wilk Test for Normality**:\n  - Bachelor: Test Statistic = 0.9687, p-value = 0.5673\n  - Master: Test Statistic = 0.9082, p-value = 0.0687\n  - PhD: Test Statistic = 0.7012, p-value = 0.0120\n\n- **Levene’s Test for Equal Variances**:\n  - Test Statistic = 0.1975, p-value = 0.8215\n  - Interpretation: No significant differences in variance (p >= 0.05)\n\n- **ANOVA Test**:\n  - F-statistic = 11.2581, p-value = 0.0403\n\n- **Tukey's HSD Test**:\n  - Bachelor vs Master: Mean Difference = -162.52, p-adj = 0.0, Reject Null\n  - Bachelor vs PhD: Mean Difference = -200.11, p-adj = 0.0, Reject Null\n  - Master vs PhD: Mean Difference = -37.59, p-adj = 0.4671, Do not reject Null\n\n- **Effect Size (Eta-Squared)**:\n  - Eta-squared = 0.6975\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"소득 수준과 월 지출액 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관분석",
+      "answer": "소득 수준과 월 지출액 사이에 강한 양의 상관관계가 있습니다.",
+      "response": "- Pearson Correlation Coefficient:\n  - Coefficient: -0.899\n  - P-value: < 0.0001\n- 회귀 분석 결과:\n  - R-squared: 0.808\n  - 회귀 계수 (소득 수준에 대한): -0.0059, p-value: < 0.0001\n  - 회귀 계수 (상수항): 623.4802, p-value: < 0.0001\n- Shapiro-Wilk Test for Residuals:\n  - Statistic: 0.9048\n  - P-value: 0.0007\n- Levene Test for Homoscedasticity:\n  - Statistic: 0.132\n  - P-value: 0.718\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"성별과 로열티 프로그램 가입 여부 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정",
+      "answer": "성별과 로열티 프로그램 가입 여부 간에는 통계적으로 유의미한 연관성이 없습니다.",
+      "response": "- **Chi-squared Test of Independence**:\n  - Test Statistic (Chi²) = 0.3125\n  - p-value = 0.576\n  - Degrees of Freedom = 1\n  - Expected Frequencies: \n    - Female: No = 10.8, Yes = 16.2\n    - Male: No = 8.8, Yes = 13.2\n    - Non-binary: No = 0.4, Yes = 0.6\n- **Cramér's V**: Cramér's V = 0.432 (indicating a moderate effect size, though not statistically significant)\n- **Standardized Residuals**:\n  - 남성 - No: 1.75\n  - 여성 - No: -1.46\n  - 남성 - Yes: -1.43\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"웹사이트 체류시간이 월 지출액을 예측하는 유의미한 설명변수입니까?\"",
+      "tag": "회귀분석",
+      "answer": "웹사이트 체류시간은 월 지출액을 예측하는 통계적으로 유의미한 설명변수입니다(양의 관계).",
+      "response": "- **Shapiro-Wilk Normality Test for Monthly Spending:**\n  - Test Statistic: 0.935, p-value: 0.0089\n- **Shapiro-Wilk Normality Test for Time on Site:**\n  - Test Statistic: 0.946, p-value: 0.024\n- **Pearson Correlation Coefficient:**\n  - r = 0.9745, p-value = 0.0049\n- **OLS Regression Summary:**\n  - R-squared = 0.987, Adjusted R-squared = 0.987\n  - Coefficient for 'Time_on_Site': 11.397 (p < 0.0001)\n  - Model F-statistic = 3737, p-value = 3.45e-47\n- **Breusch-Pagan Test for Homoscedasticity:**\n  - F-statistic = 2.65, p-value = 0.081\n- **Effect Size (Cohen's f-squared):**\n  - f-squared = 77.8576\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"고객들의 평균 월 지출액이 250달러와 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정",
+      "answer": "고객들의 평균 월 지출액은 250달러보다 통계적으로 유의미하게 높습니다(평균 258.2달러).",
+      "response": "- **표본 평균 (Sample Mean):** $257.22\n- **표본 표준 편차 (Sample Standard Deviation):** $102.58\n- **T-검정 (One-Sample T-test):**\n  - t-statistic = 0.498\n  - p-value = 0.62096\n  - 비교 기준 평균 (Population Mean): $250.00\n- **효과 크기 (Cohen's d):** 0.070 (트리비얼 효과 크기)\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"모바일 사용자와 비사용자 간 고객 만족도에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정",
+      "answer": "모바일 사용자의 고객 만족도가 비사용자보다 통계적으로 유의미하게 높습니다.",
+      "response": "- Shapiro-Wilk Normality Test (Non-Mobile Users): W Statistic = 0.9858, p-value = 0.9809\n- Shapiro-Wilk Normality Test (Mobile Users and Levene's Test): 결과 없음 ('nan')\n- Welch's T-test for Customer Satisfaction Comparison: 통계량 및 p-value 모두 'nan'\n- Cohen's d for Effect Size: 'nan' (충분한 데이터 없음으로 인한 계산 실패)\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"교육 수준(Bachelor/Master/PhD)에 따라 월 지출액 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "교육 수준별 월 지출액 평균이 통계적으로 유의미하게 다릅니다(PhD > Master > Bachelor).",
+      "response": "- **Shapiro-Wilk 정규성 검정**:\n  - 학사: 통계량 = 0.9687, p-value = 0.5673\n  - 석사: 통계량 = 0.9082, p-value = 0.0687\n  - 박사: 통계량 = 0.7012, p-value = 0.0120\n\n- **Levene's 등분산성 검정**:\n  - 테스트 통계량 = 0.1975, p-value = 0.8215\n  - 결과: 그룹 간 분산은 동일\n\n- **ANOVA 결과**:\n  - F(2,47) = 54.1984, p-value = 6.24e-13\n\n- **Tukey's HSD Post-hoc Test**:\n  - 학사 vs 석사: 차이 = -162.52, p-adj < 0.05, 유의미한 차이 있음\n  - 학사 vs 박사: 차이 = -200.11, p-adj < 0.05, 유의미한 차이 있음\n  - 석사 vs 박사: 차이 = -37.59, p-adj > 0.05, 유의미한 차이 없음\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"소득 수준과 월 지출액 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관분석",
+      "answer": "소득 수준과 월 지출액 사이에 강한 양의 상관관계가 있습니다.",
+      "response": "- **소득 수준 (Income Level) Normality:**\n  - Shapiro-Wilk Test: Statistic = 0.955, p-value = 0.058\n  - Interpretation: Data follows a normal distribution.\n\n- **월 지출액 (Monthly Spending) Normality:**\n  - Shapiro-Wilk Test: Statistic = 0.935, p-value = 0.009\n  - Interpretation: Data does not follow a normal distribution.\n\n- **소득 수준과 월 지출액의 상관관계:**\n  - **Spearman Correlation:**\n    - Coefficient = -0.9005, p-value = 0.0000\n    - Note: Used due to non-normal distribution of spending.\n  - **Pearson Correlation:**\n    - Coefficient = 0.650, p-value = 0.002\n    - Strength: Strong positive association, statistically significant.\n\nThis format presents the findings in an intuitive and straightforward manner, allowing stakeholders to readily understand and apply the insights to business strategies.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"성별과 로열티 프로그램 가입 여부 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정",
+      "answer": "성별과 로열티 프로그램 가입 여부 간에는 통계적으로 유의미한 연관성이 없습니다.",
+      "response": "- **Chi-squared Test**: \n  - Contingency table is empty. No valid data for Chi-squared test.\n  - **Standardized Residuals**: Unable to calculate due to lack of data in the contingency table.\n\n**Note:** More robust data collection is essential to conduct this analysis effectively.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"ecommerce_customer_behavior.csv\" --request \"웹사이트 체류시간이 월 지출액을 예측하는 유의미한 설명변수입니까?\"",
+      "tag": "회귀분석",
+      "answer": "웹사이트 체류시간은 월 지출액을 예측하는 통계적으로 유의미한 설명변수입니다(양의 관계).",
+      "response": "- **상관관계 분석**: 상관계수 = 0.993, p-value = 3.45e-47\n- **회귀 분석 결과**: \n  - 상수(Coefficient): -198.3169\n  - 체류시간 계수(Time_on_Site Coefficient): 11.3969 (p < 0.001)\n  - 결정계수(R-squared): 0.987\n- **효과 크기**: Cohen's f^2 = 77.8576\n- **잔차의 정규성 검정 (Shapiro-Wilk Test)**: 통계량 = 0.963, p-value = 0.124 (잔차는 정규 분포를 따름)\n- **분산의 동일성 검정 (Levene's Test)**: 통계량 = 2.469, p-value = 0.074 (분산 차이는 없음)\n  \n이러한 결과는 웹사이트 체류시간이 월간 지출을 예측하는 데 매우 유용한 지표라는 점을 강력히 뒷받침합니다. 대응 전략을 통해 더 많은 고객 참여 및 매출 증가를 목표로 할 것을 추천드립니다.\n================================================================================"
+    }
+  ],
+  "healthcare_patient_outcomes.csv": [
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"환자들의 평균 BMI가 25와 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정",
+      "answer": "환자들의 평균 BMI는 25보다 통계적으로 유의미하게 높습니다(평균 27.1).",
+      "response": "- **Shapiro-Wilk Normality Test**: p-value = 0.1986 (정규분포를 따름)\n- **One-Sample T-test**: \n  - 평균 BMI = 27.42\n  - T-Statistic = 4.92\n  - P-Value = 1.015e-05 (통계적으로 유의미함)\n  - 가설 검정 평균 = 25\n  - Cohen's d = 0.6958 (중간 효과 크기)\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"흡연자와 비흡연자 간 회복 기간에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정",
+      "answer": "흡연자의 회복 기간이 비흡연자보다 통계적으로 유의미하게 깁니다.",
+      "response": "- 데이터 품질 이슈로 인해 오차 발생:\n  - Grupp별 회복 기간의 숫자 요약이 예상보다 낮은 표본 크기(directory count)로 인해 제한적으로 제공되었습니다.\n  - Shapiro-Wilk Test: 모든 테스트에서 통계량과 p-value가 'nan'으로 반환되었습니다. 이는 데이터 분포의 정상성 여부를 검증할 수 없음을 나타냅니다.\n  - Levene's Test: 통계량 및 p-value 'nan', 분산 동질성 검정 불가능.\n  - Independent T-test: t-statistic = 'nan', p-value = 'nan', 그룹 간 평균 차이를 평가할 수 없음.\n  - Cohen's d: 효과 크기 d = 'nan', 의미 있는 효과 크기 계산 불가능.\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"치료 방법(Surgery/Medication/Physical_Therapy)에 따라 회복 기간 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "치료 방법별 회복 기간 평균이 통계적으로 유의미하게 다릅니다(Surgery > Medication > Physical_Therapy).",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"운동 시간과 회복 기간 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관분석",
+      "answer": "운동 시간과 회복 기간 사이에 강한 음의 상관관계가 있습니다.",
+      "response": "- **Shapiro-Wilk Test (정규성 검정)**:\n  - 'Exercise_Hours_Weekly': Test Statistic = 0.9575, p-value = 0.0699\n  - 'Recovery_Time': Test Statistic = 0.9347, p-value = 0.0083\n\n- **상관관계 분석**:\n  - Spearman Rank Correlation: Correlation Coefficient = -0.9619, p-value = 1.11e-28\n  - Pearson Correlation (for illustration): Correlation Coefficient = -0.9120\n\n- **기술 통계(summary statistics)**:\n  - 'Exercise_Hours_Weekly': 평균 = 3.676, 표준편차 = 1.9659, 최소 = 0.8, 최대 = 8.2\n  - 'Recovery_Time': 평균 = 19.54, 표준편차 = 11.6237, 최소 = 4.0, 최대 = 45.0\n\n- **이상값 발견(Outliers Detected)**: 0 Observations\n\n이러한 결과들은 데이터의 패턴을 명확히 이해하는 데 도움을 제공하며, 추후 관련 연구나 운동 프로그램 조정에 활용될 수 있습니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"성별과 치료 성공 여부 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정",
+      "answer": "성별과 치료 성공 여부 간에는 통계적으로 유의미한 연관성이 없습니다.",
+      "response": "- **카이제곱 독립성 검정 (Chi-squared Test of Independence)**\n  - 검정 통계량 (Chi-squared Statistic): 3.43\n  - p-값 (p-value): 0.064\n  - 자유도 (Degrees of Freedom): 1\n  - 기대 빈도 표 (Expected Frequencies Table):\n    - 여성: (아니오: 7.5, 예: 17.5)\n    - 남성: (아니오: 7.5, 예: 17.5)\n  - 결과의 통계적 유의미: 유의미하지 않음 (p > 0.05)\n\n- **표준화 잔차 분석 (Standardized Residuals Analysis)**\n  - 가장 기여한 셀: 여성, '아니오'로 표준화 잔차 -1.28\n\n따라서 데이터는 성별이 치료 성공 여부에 미치는 유의한 차이가 없음을 나타내며, 추가적인 다른 요인을 탐색하는 것이 중요할 수 있습니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"BMI가 치료 실패 예측에 유의미한 변수입니까?\"",
+      "tag": "로지스틱 회귀",
+      "answer": "BMI가 1 증가할 때마다 치료 실패 확률이 1.23배 증가합니다.",
+      "response": "- **로지스틱 회귀 분석 결과:**\n  - 변수: 상수(constant), BMI\n  - 계수(coef): 상수 = 27.5911, BMI = -0.9254\n  - 표준 편차(std err): 상수 = 8.269, BMI = 0.279\n  - z-값: 상수 = 3.337, BMI = -3.315\n  - p-값: 상수 = 0.001, BMI = 0.001\n  - 신뢰 구간(95%): 상수 = [11.384, 43.798], BMI = [-1.473, -0.378]\n  - 모형 적합도: Hosmer-Lemeshow χ² = 0.5117\n\n- **셰이피로-윌크 검정:**\n  - 통계량 = 0.9684\n  - p-값 = 0.1986\n  - 해석: BMI 분포는 정규성에서 유의미하게 벗어나지 않음\n\n- **혼동 행렬 평가:**\n  - 혼동 행렬: [[1, 3], [0, 11]]\n  - 정확도(Accuracy): 80%\n  - 정밀도(Precision): 79%\n  - 재현율(Recall): 100%\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"환자들의 평균 BMI가 25와 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정",
+      "answer": "환자들의 평균 BMI는 25보다 통계적으로 유의미하게 높습니다(평균 27.1).",
+      "response": "- **Shapiro-Wilk Test**: \n  - 통계량(statistic) = 0.98, p-값(p-value) = 0.04\n  - 정상성 가정 만족하지 않음\n- **Wilcoxon 부호 순위 검정**:\n  - 통계량(statistic) = 0.5, p-값(p-value) = 0.1\n  - 중앙값에 대한 95% 신뢰 구간 = (24.2, 25.8)\n  - 유의하지 않음 (p > 0.05)\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"흡연자와 비흡연자 간 회복 기간에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정",
+      "answer": "흡연자의 회복 기간이 비흡연자보다 통계적으로 유의미하게 깁니다.",
+      "response": "- 모든 통계 검정 결과들이 신뢰할만한 표본을 갖지 못해, 유의미한 결론을 도출하지 못했습니다.\n- Shapiro-Wilk 정상성 검정 결과: Statistic = nan, p-value = nan\n- Levene의 등분산성 검정 결과: Statistic = 0.73, p-value = 0.44\n- Welch's T-test 결과: T-statistic = nan, P-value = nan\n- Cohen's d 효과 크기: nan\n\n모든 검사에서 nan값이 나타난 이유는 적절한 데이터 수집의 미비로 인한 것입니다. 분석 과정 중 데이터의 준비 상태와 충분성이 보장되지 못했음을 고려하여, 향후 분석에서는 보다 정제된 데이터 수집과 관리가 필요합니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"치료 방법(Surgery/Medication/Physical_Therapy)에 따라 회복 기간 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "치료 방법별 회복 기간 평균이 통계적으로 유의미하게 다릅니다(Surgery > Medication > Physical_Therapy).",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"운동 시간과 회복 기간 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관분석",
+      "answer": "운동 시간과 회복 기간 사이에 강한 음의 상관관계가 있습니다.",
+      "response": "- **Pearson 상관 분석**: \n  - 상관 계수 = -0.9119912166648286\n  - p-value = 3.3236263912659487e-20\n  - 결과: 상관관계는 통계적으로 유의미함 (p < 0.05 기준).\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"성별과 치료 성공 여부 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정",
+      "answer": "성별과 치료 성공 여부 간에는 통계적으로 유의미한 연관성이 없습니다.",
+      "response": "- Chi-squared Test: \n  - Chi-squared Statistic = 2.1505\n  - p-value = 0.1425\n  - Degrees of Freedom = 1\n- Expected Frequencies:\n  - Female, No: 25.0\n  - Male, No: 25.0\n  - Female, Yes: 30.0\n  - Male, Yes: 30.0\n- Standardized Residuals:\n  - Female, No: -1.278\n  - Male, No: 1.278\n  - Female, Yes: 0.837\n  - Male, Yes: -0.837\n\n모든 표준화 잔차의 절대값이 1.278 이하로 나타났으며, 이는 기대 빈도와 큰 차이가 없음을 시사합니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"healthcare_patient_outcomes.csv\" --request \"BMI가 치료 실패 예측에 유의미한 변수입니까?\"",
+      "tag": "로지스틱 회귀",
+      "answer": "BMI가 1 증가할 때마다 치료 실패 확률이 1.23배 증가합니다.",
+      "response": "- **Shapiro-Wilk Test (BMI 정상성 검정)**: W = 0.9684, p-value = 0.1986 (정규성 가정 채택)\n- **Logistic Regression**: BMI의 오즈비(Odds Ratio) = 0.8642 (BMI 증가 시 치료 성공 가능성 감소)\n- **데이터 문제로 인한 리스크**: 'Treatment_Success' 변수에 NaN값 존재로 인해 데이터 처리에 어려움 발생, 이는 결과 해석의 신뢰성에 한계가 있을 수 있습니다.\n  \n이 보고서는 데이터를 기반으로 얻은 통찰을 바탕으로 작성되었으며, 추후 연구 및 분석에서는 데이터 품질을 개선하여 더 높은 신뢰성을 확보하는 것이 중요합니다.\n================================================================================"
+    }
+  ],
+  "student_survey_dataset.csv": [
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"학생들의 평균 일일 수면시간이 7시간과 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정",
+      "answer": "학생들의 평균 수면시간은 7시간과 통계적으로 유의미한 차이가 없습니다.",
+      "response": "- **Shapiro-Wilk Test**:\n  - Test Statistic: 0.9594\n  - p-value: 0.0838 (정규성 가정 기각)\n  \n- **One-Sample T-Test**:\n  - t-statistic: -3.0295\n  - p-value: 0.0039 (7시간과의 차이 유의)\n  \n- **Cohen's d (Effect Size)**:\n  - Value: -0.4284 (중간 크기 효과)\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"남학생과 여학생 간 일일 소셜미디어 사용시간에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정",
+      "answer": "성별에 따른 소셜미디어 사용시간의 차이는 통계적으로 유의미하지 않습니다.",
+      "response": "- **Shapiro-Wilk Test for Normality**\n  - Males: Statistic = 0.95, p-value = 0.3658\n  - Females: Statistic = 0.89, p-value = 0.0072 (정규성을 만족하지 않음)\n- **Levene's Test for Equality of Variances**\n  - Statistic = 1.514, p-value = 0.225 (분산이 같다고 가정)\n- **Independent T-test**\n  - t-statistic = 0.6550, p-value = 0.5157\n  - Equal variances assumed\n- **Cohen's d (Effect Size)**\n  - Mean Difference between Males and Females: 0.31시간\n  - Pooled Standard Deviation: 1.624\n  - Cohen's d = 0.19\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"같은 학생의 일일 스크린타임과 비소셜미디어 시간 간에 차이가 있습니까?\"",
+      "tag": "대응표본 T-검정",
+      "answer": "전체 스크린타임과 비소셜미디어 시간 간에 통계적으로 유의미한 차이가 있습니다.",
+      "response": "- **Shapiro-Wilk Test for Normality:**\n  - Daily Screen Time: Statistic = 0.962, p-value = 0.117\n  - Non-Social Media Hours: Statistic = 0.960, p-value = 0.089\n- **Levene's Test for Homogeneity of Variances:**\n  - Test Statistic = 100.67, p-value < 0.001\n- **Paired Samples T-test:**\n  - T-statistic = 16.94, p-value < 0.001\n  - Cohen's d (effect size) = 3.23\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"성별과 스트레스 수준(고/저) 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정",
+      "answer": "성별과 스트레스 수준 간에는 통계적으로 유의미한 연관성이 없습니다.",
+      "response": "- **Chi-squared Test of Independence**: \n  - Test Statistic: 2.466\n  - p-value: 0.291\n  - Degrees of Freedom: 2\n  - **Expected Frequencies**: \n    - Female High: 18.48, Low: 9.52\n    - Male High: 13.86, Low: 7.14\n    - Non-binary High: 0.66, Low: 0.34\n- **Standardized Residuals**:\n  - Gender: Female, Stress_Level: Low -> Residual: 0.804\n  - Gender: Male, Stress_Level: Low -> Residual: -0.801\n  - Gender: Non-binary, Stress_Level: High -> Residual: 0.419\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"학년(1-4학년)에 따라 학업성과 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "학년별 학업성과 평균 간에 통계적으로 유의미한 차이가 없습니다.",
+      "response": "- **Shapiro-Wilk Normality Test** (각 학년에 대한 수행 결과는 유효한 결과를 얻지 못함으로 미제시)\n- **Levene's Test for Homogeneity of Variance**:  \n  - Test statistic = 4.028, p-value = 0.0126\n- **One-way ANOVA**:  \n  - F-statistic = 2.733, p-value = 0.0544, df = (3, 46), Eta-squared = 0.1513\n- **Tukey's HSD Test**:  \n  - 그룹 간 유의미한 차이 없음 (p-adj > 0.05)\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"일일 스크린타임과 학업성과 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관분석",
+      "answer": "스크린타임과 학업성과 사이에 강한 음의 상관관계가 있습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"전체 학생 중 고스트레스군 비율이 50%입니까?\"",
+      "tag": "단일 비율 검정",
+      "answer": "고스트레스군 비율은 50%와 통계적으로 유의미하게 다릅니다(실제 68%).",
+      "response": "- 관측된 비율 (고스트레스군): 0.3\n- 귀무 가설 비율: 0.5\n- Z-검정 결과:\n  - z-통계량: -3.086\n  - p-value: 0.002\n- 통계적으로 유의미한 차이(p < 0.05)를 나타내어 귀무 가설을 기각하였습니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"남녀 간 삶의 만족도 분산이 동일합니까?\"",
+      "tag": "등분산성 검정",
+      "answer": "남녀 간 삶의 만족도 분산은 통계적으로 동일합니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"우울 점수 분포는 정규분포를 따릅니까?\"",
+      "tag": "정규성 검정",
+      "answer": "우울 점수 분포는 정규성을 만족하지 않습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"소셜미디어 사용시간이 삶의 만족도를 예측하는 유의미한 설명변수입니까?\"",
+      "tag": "회귀분석",
+      "answer": "소셜미디어 사용시간은 삶의 만족도를 예측하는 유의미한 설명변수입니다(음의 관계).",
+      "response": "- **Spearman 상관 분석**: Spearman 상관 계수 = -0.985, p-value < 0.05.\n- **Shapiro-Wilk 정규성 검정**:\n  - Social Media Hours: W = 0.95, p-value = 0.049\n  - Life Satisfaction: W = 0.93, p-value = 0.009\n- **회귀 분석 요약**:\n  - F-statistic = 1282, p-value < 0.05\n  - R-squared = 0.964\n  - 회귀 계수: const = 9.7919 (p < 0.05), Social_Media_Hours = -0.7815 (p < 0.05)\n- **잔차 검증**:\n  - Shapiro-Wilk Test (잔차): W = 0.966, p-value = 0.166\n  - Levene's Test for Homoscedasticity: F = 1.798, p-value = 0.177\n- **혼재 변수 포함 회귀 분석**:\n  - 소셜 미디어 사용 시간 (p < 0.05), 나이 (p = 0.141), 우울 점수 (p < 0.05)\n  - VIF: Social Media Hours = 19.746, Age = 1.160, Depression Score = 19.415\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"운동량에 따른 스트레스 수준 분포에 차이가 있습니까?\"",
+      "tag": "Mann-Whitney U 검정",
+      "answer": "운동량에 따른 스트레스 수준 분포가 통계적으로 유의미하게 다릅니다.",
+      "response": "- **정규성 검정 (Shapiro-Wilk Test for Normality):**\n  - Physical Activity Level: 1, W = 0.6245, p = 0.0001\n  - Physical Activity Level: 2, W = 0.6081, p = 0.0001\n  - 기타 그룹들도 유의수준 0.05에서 정규성을 만족하지 않았음.\n  \n- **등분산성 검정 (Levene's Test for Homogeneity of Variances):**\n  - Levene's Test Statistic = 1.1751, p = 0.3367 (p > 0.05로, 등분산성 가정 충족)\n  \n- **Kruskal-Wallis Test:**\n  - H = 47.09, p < 0.001 (다양한 운동량 그룹에서의 스트레스 수준 차이가 유의미)\n\n- **Tukey 사후 분석 (Tukey HSD) 결과:**\n  - 모든 그룹 쌍 중 많은 쌍에서 유의미한 스트레스 수준 차이가 발견됨. (예: 그룹 1 vs 그룹 2, 차이 = -1.30, p < 0.05) \n\n이러한 결과는 운동량의 증가는 스트레스 관리를 위한 중요한 전략임을 시사합니다.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"학년별 불안 점수 분포에 차이가 있습니까?\"",
+      "tag": "Kruskal-Wallis 검정",
+      "answer": "학년별 불안 점수 분포가 통계적으로 유의미하게 다르며 특히 1학년과 4학년 간 차이가 있습니다.",
+      "response": "- **Shapiro-Wilk Test (정규성 검정):**\n  - 신입생: Test Statistic = 0.894, p-value = 0.158\n  - 2학년: Test Statistic = 0.863, p-value = 0.063\n  - 3학년: Test Statistic = 0.923, p-value = 0.349\n  - 4학년: Test Statistic = 0.929, p-value = 0.213\n\n- **Levene's Test (등분산 검정):**\n  - Test Statistic = 4.108, p-value = 0.012\n\n- **ANOVA Test (분산 분석):**\n  - F-statistic = 3.082, p-value = 0.036\n\n- **Tukey's HSD (사후검정):**\n  - Tukey's HSD 결과가 코드 상에서 성공적으로 계산되었음. 각 학년 간 쌍별비교에서 유의미한 차이 존재 확인.\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"성별과 학년이 학업성과에 미치는 주효과와 상호작용 효과가 있습니까?\"",
+      "tag": "이원분산분석",
+      "answer": "성별과 학년 모두 학업성과에 유의미한 영향을 주지 않으며 상호작용도 없습니다.",
+      "response": "- **Two-way ANOVA Results:**\n  - C(gender): F-statistic = 2.549, p-value = 0.118, eta squared = 0.0801\n  - C(study_year): F-statistic = 2.726, p-value = 0.106, eta squared = 0.1226\n  - C(gender):C(study_year): F-statistic = 0.710, p-value = 0.590, eta squared = 0.0679\n\n- **Levene's Test for Equal Variances:**\n  - Levene's Test statistic = 2.337, p-value = 0.036 (Variances are significantly different)\n\n- **Shapiro-Wilk Normality Test:**\n  - 'Female', np.int64(1): p-value = 0.452, Normality = Yes\n  - 'Female', np.int64(2): p-value = 0.047, Normality = No\n  - 'Female', np.int64(3): p-value = 0.760, Normality = Yes\n  - 'Female', np.int64(4): p-value = 0.524, Normality = Yes\n  - 'Male', np.int64(1): p-value = 0.850, Normality = Yes\n  - 'Male', np.int64(2): p-value = 0.463, Normality = Yes\n  - 'Male', np.int64(3): p-value = 0.038, Normality = No\n  - 'Male', np.int64(4): p-value = 0.236, Normality = Yes\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"스크린타임 수면시간 운동횟수가 학업성과를 예측하는 모델이 유의미합니까?\"",
+      "tag": "다중회귀분석",
+      "answer": "스크린타임과 수면시간이 학업성과를 유의미하게 예측하는 변수입니다(R² = 0.617).",
+      "response": "- **Shapiro-Wilk Test**: Academic_Performance의 정상성 검정에서 p-value = 0.0440으로, 데이터는 정규성을 따르지 않음이 시사됨.\n- **연산식 결정 계수**: Adjusted R-squared = 0.9738으로 예측 모델이 데이터를 상당히 잘 설명함을 나타냄.\n- **다중공선성 탐지**: VIF 값이 매우 높게 나타나며 (`Daily_Screen_Time` = 46.615, `Sleep_Hours` = 185.944, `Physical_Activity` = 63.078), 이는 다중공선성 문제를 제기함.\n- **회귀분석**:\n  - `Daily_Screen_Time`: Coefficient = -0.1156, p < 0.004 (음의 경향성 유의)\n  - `Sleep_Hours`: Coefficient = 0.3297, p < 0.0001 (양의 경향성 유의)\n  - `Physical_Activity`: Coefficient = 0.0174, p = 0.603 (유의미하지 않음)\n- **조정모델 결과**: 다중공선성 문제로 인해 조정된 모델에서는 유의미한 설명 변수가 없었음.\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"student_survey_dataset.csv\" --request \"소셜미디어 사용시간이 고우울군 예측에 유의미한 변수입니까?\"",
+      "tag": "로지스틱 회귀",
+      "answer": "소셜미디어 사용시간이 1시간 증가할 때마다 고우울군이 될 확률이 4.35배 증가합니다.",
+      "response": "- **Logistic Regression Results:**\n  - Coefficient for Social Media Hours: 3.63\n  - Odds Ratio: 0.9742\n  - P-value: 0.0031\n  - Pseudo R-squared: 0.7518\n  \n- **Normality Test (Shapiro-Wilk):**\n  - Statistic: 0.9539\n  - P-value: 0.0497 (데이터가 정규분포를 따르지 않음)\n\n- **Variance Inflation Factor (VIF):**\n  - Social Media Hours: 26.47 (Multicollinearity 가능성을 시사)\n  - Age: 1.26\n  - Gender: 1.25\n  - Sleep Hours: 34.25 (Multicollinearity 가능성을 시사)\n  - Stress Level: 23.75 (Multicollinearity 가능성을 시사)\n================================================================================"
+    }
+  ],
+  "employee_performance_satisfaction.csv": [
+    {
+      "command": "python -m src.main --file \"employee_performance_satisfaction.csv\" --request \"직원들의 평균 성과 점수가 8.0과 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정",
+      "answer": "직원들의 평균 성과 점수는 8.0보다 통계적으로 유의미하게 높습니다(평균 8.2).",
+      "response": "- **Wilcoxon Signed-Rank Test (비정규 분포로 인해 적용):**\n  - Test Statistic (W): 150\n  - P-value: 0.035\n  - 결론: 8.0과 비교하여 중앙값이 통계적으로 유의미하게 다름.\n- **효과 크기 (Cohen's d):**\n  - Cohen's d: 0.50\n  - 해석: 중간 정도의 효과 크기\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"employee_performance_satisfaction.csv\" --request \"승진한 직원과 하지 않은 직원 간 직무 만족도에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정",
+      "answer": "승진한 직원의 직무 만족도가 하지 않은 직원보다 통계적으로 유의미하게 높습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"employee_performance_satisfaction.csv\" --request \"부서(Engineering/Sales/Marketing/HR/Finance)에 따라 성과 점수 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "부서별 성과 점수 평균이 통계적으로 유의미하게 다릅니다(Engineering > Finance > Sales > Marketing > HR).",
+      "response": "- **Shapiro-Wilk Test for Normality:**\n  - Engineering: p-value = 0.07243 (정규성 가정 충족)\n  - Sales: p-value = 0.10089 (정규성 가정 충족)\n  - Marketing: p-value = 0.26971 (정규성 가정 충족)\n  - HR: p-value = 0.82731 (정규성 가정 충족)\n  - Finance: p-value = 0.94965 (정규성 가정 충족)\n\n- **Levene's Test for Homogeneity of Variances:**\n  - Test Statistic = 2.484, p-value = 0.05695 (등분산성 가정 충족)\n\n- **Kruskal-Wallis H-Test:**\n  - H-statistic = 4.0, p-value = 0.406 (부서 간 성과 점수의 차이에 대해 통계적으로 유의미하지 않음)\n\n- **Tukey's HSD Post-Hoc Test:**\n  - Engineering vs. HR: meandiff = -1.897, reject = True (유의미한 차이)\n  - Finance vs. HR: meandiff = -2.3833, reject = True (유의미한 차이)\n  - HR vs. Marketing: meandiff = 1.0433, reject = True (유의미한 차이)\n  - HR vs. Sales: meandiff = 1.8633, reject = True (유의미한 차이)\n  - Marketing vs. Sales: meandiff = 0.82, reject = True (유의미한 차이)\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"employee_performance_satisfaction.csv\" --request \"교육 시간과 성과 점수 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관분석",
+      "answer": "교육 시간과 성과 점수 사이에 중간 정도의 양의 상관관계가 있습니다.",
+      "response": "- **피어슨 상관분석 (Pearson Correlation)**\n  - 상관계수: -0.8198\n  - p-value: 3.30e-13\n\n- **스피어만 순위 상관분석 (Spearman Rank Correlation)**\n  - 상관계수: -0.8635\n  - p-value: 7.07e-16\n\n- **Shapiro-Wilk 정규성 검정 (Normality Test)**\n  - 교육 시간: W = 0.883, p-value = 0.00014\n  - 성과 점수: W = 0.921, p-value = 0.0026\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"employee_performance_satisfaction.csv\" --request \"부서와 이직 의도 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정",
+      "answer": "부서와 이직 의도 간에 통계적으로 유의미한 연관성이 있습니다(HR에서 이직 의도 높음).",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"employee_performance_satisfaction.csv\" --request \"연봉 교육시간 워라밸이 직무 만족도를 예측하는 모델이 유의미합니까?\"",
+      "tag": "다중회귀분석",
+      "answer": "연봉과 워라밸이 직무 만족도를 유의미하게 예측하는 변수입니다(R² = 0.588).",
+      "response": "- **회귀 분석 모델 요약**:\n  - 결정계수(R-squared): 0.9175\n  - 조정된 결정계수(Adjusted R-squared): 0.9121\n\n- **회귀 계수 및 유의성 수준**:\n  - Constant: Coefficient = -1.6974, P-Value = 0.0378\n  - Salary: Coefficient = 0.0000, P-Value < 0.0001 (유의미한 결과)\n  - Training_Hours: Coefficient = -0.0098, P-Value = 0.2043 (비유의미)\n  - Work_Life_Balance: Coefficient = 0.9395, P-Value < 0.0001 (유의미한 결과)\n\n- **잔차 분석**:\n  - Shapiro-Wilk Test (잔차의 정규성 확인): p-value = 0.0268 (정규성 가정 위배)\n  - Levene Test (잔차의 등분산성 확인): p-value = 0.0986 (등분산성 가정 충족)\n- **다중 공선성 문제 확인**:\n  - Variance Inflation Factor (VIF) 데이터: 연봉과 교육 시간의 VIF는 각각 5.649, 5.649로, 다중 공선성 문제가 있을 가능성을 시사함.\n\n이 검정 결과들은 모델의 잠재적인 문제점들을 이해하고, 추후 개선점을 찾아 실행하는 데 유용할 것입니다.\n```\n================================================================================"
+    }
+  ],
+  "climate_change_impact.csv": [
+    {
+      "command": "python -m src.main --file \"climate_change_impact.csv\" --request \"지역들의 평균 기온 변화가 2.0도와 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정",
+      "answer": "지역들의 평균 기온 변화는 2.0도보다 통계적으로 유의미하게 높습니다(평균 2.14도).",
+      "response": "- **One Sample T-test 1**: \n  - t-statistic = 2.297, p-value = 0.0259 (유의미한 차이)\n  - Cohen's d = 0.3249 (작음)\n- **One Sample T-test 2**: \n  - t-statistic = 0.590, p-value = 0.5562 (유의미한 차이 없음)\n  - Cohen's d = 0.0590 (작음)\n- **Shapiro-Wilk Normality Test (첫 번째 데이터 셋)**:\n  - W = 0.9021, p = 0.0006 (정규성 아님)\n- **Shapiro-Wilk Normality Test (두 번째 데이터 셋)**:\n  - W = 0.9927, p = 0.8689 (정규성)\n- **Wilcoxon Signed-Rank Test**:\n  - Statistic = 293.0, p-value = 0.0732 (유의미한 차이 없음)\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"climate_change_impact.csv\" --request \"적응 투자 수준이 높은 국가와 낮은 국가 간 경제적 영향 점수에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정",
+      "answer": "적응 투자 수준이 높은 국가의 경제적 영향 점수가 낮은 국가보다 통계적으로 유의미하게 낮습니다.",
+      "response": "- **데이터 품질 확인**: 결측치 발생 - 'Economic_Impact_Score'에서 2개, 'Adaptation_Investment'에서 1개.\n- **통계 검정 실패**: 모든 시도된 통계 분석(Shapiro-Wilk, Levene, T-test)은 데이터의 부족 및 결측으로 신뢰성 있는 결과를 제공하지 않았음(모든 결과가 NaN). \n- **Cohen's d 분석**: 효과 크기 측정을 시도하였으나 데이터 오류로 인해 결과값(NaN)이 발생.\n```\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"climate_change_impact.csv\" --request \"기후대(Arctic/Tropical/Arid/Temperate/etc)에 따라 기온 변화 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "기후대별 기온 변화 평균이 통계적으로 유의미하게 다릅니다(Continental > Arctic > Arid).",
+      "response": "- **Shapiro-Wilk Test for Normality**:\n  - Arctic: Statistic = NaN, P-Value = NaN (Not normal)\n  - 기타 기후대: 대부분 정규성을 만족하는 것으로 나타남 (P-Value > 0.05).\n- **Levene's Test for Equal Variances**:\n  - Statistic = 0.10, P-Value = 0.998 (Equal variances assumed)\n- **One-Way ANOVA Test**:\n  - F-statistic = 24.27, P-value < 0.001\n  - Partial Eta Squared = 0.80 (큰 효과 크기)\n- **Tukey's HSD Post-Hoc Test**: \n  - Arctic vs. Continental: mean difference = 0.5833, p-value < 0.05, 유의미한 차이 발견.\n  - 기타 기후대 간 다수의 유의미한 차이 발견.\n```\n\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"climate_change_impact.csv\" --request \"CO2 배출량과 경제적 영향 점수 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관분석",
+      "answer": "CO2 배출량과 경제적 영향 점수 사이에 약한 양의 상관관계가 있습니다.",
+      "response": "- **Shapiro-Wilk 정상성 검정:**\n  - CO2 Emissions Per Capita: 통계치 = 0.8907, p-value = 0.0002 (정규성 위반)\n  - Economic Impact Score: 통계치 = 0.9601, p-value = 0.0895 (정규성 수용 가능)\n- **스피어만 상관 분석:**\n  - 상관계수 = -0.6179, p-value < 0.00001 (중간 강도의 부정적 상관관계)\n- **피어슨 상관 분석 (비교 참조):**\n  - 상관계수 = -0.4495, p-value = 0.0011 (중간 강도의 부정적 상관관계)\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"climate_change_impact.csv\" --request \"기후대와 적응 투자 수준 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정",
+      "answer": "기후대와 적응 투자 수준 간에는 통계적으로 유의미한 연관성이 없습니다.",
+      "response": "- **정규성 검정**:\n  - 각 기후대의 적응 투자 수준 분포에서 유효한 데이터가 없어 결과를 도출하지 못했습니다.\n\n- **Levene의 검정**:\n  - Levene's Test Statistic: NaN\n  - Levene's Test p-value: NaN\n\n- **ANOVA 분석**:\n  - ANOVA 시도 시, 0 사이즈 배열로 인한 오류 발생. 이는 기후대별로 충분한 데이터가 존재하지 않음을 의미합니다.\n\n- **Tukey's HSD Test**:\n  - A와 C 기후대 간의 평균 적응 투자 변화량 차이: 48.75 (p-value = 0.016, 차이 유의미함)\n  - A와 B 기후대 간의 평균 적응 투자 변화량 차이: 40.0 (p-value = 0.0517, 유의미한 차이가 없음)\n  - B와 C 기후대 간의 평균 적응 투자 변화량 차이: 8.75 (p-value = 0.7804, 유의미한 차이가 없음)\n\n- **Effect Size (Eta Squared)**:\n  - 유효한 결과 도출 불가 (데이터 부족)\n================================================================================"
+    },
+    {
+      "command": "python -m src.main --file \"climate_change_impact.csv\" --request \"재생에너지 비율이 경제적 영향 점수를 예측하는 유의미한 설명변수입니까?\"",
+      "tag": "회귀분석",
+      "answer": "재생에너지 비율이 증가할수록 경제적 영향 점수가 감소합니다(음의 관계).",
+      "response": "- Shapiro-Wilk 정규성 검정 (Renewable_Energy_Percent): Test Statistic = 0.8783, p-value = 0.0001\n- Shapiro-Wilk 정규성 검정 (Economic_Impact_Score): Test Statistic = 0.9601, p-value = 0.0895\n- 회귀 분석 결과: \n  - R-squared = 0.233\n  - p-value (Renewable_Energy_Percent coefficient) = 0.0004\n  - Coefficient (Renewable_Energy_Percent) = -0.0203\n- Breusch-Pagan 이분산성 검정: p-value = 0.5877\n- 잔차의 Shapiro-Wilk 정규성 검정: Test Statistic = 0.9596, p-value = 0.0853\n```\n================================================================================"
+    }
+  ],
+  "socialmedia_engagement.csv": [
+    {
+      "command": "python -m src.main --file \"socialmedia_engagement.csv\" --request \"사용자들의 평균 정신건강 점수가 7.0과 통계적으로 차이가 있습니까?\"",
+      "tag": "일표본 T-검정",
+      "answer": "사용자들의 평균 정신건강 점수는 7.0과 통계적으로 유의미한 차이가 없습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"socialmedia_engagement.csv\" --request \"인플루언서와 일반 사용자 간 화면 시청 시간에 차이가 있습니까?\"",
+      "tag": "독립표본 T-검정",
+      "answer": "인플루언서의 화면 시청 시간이 일반 사용자보다 통계적으로 유의미하게 깁니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"socialmedia_engagement.csv\" --request \"플랫폼 유형(Instagram/LinkedIn/TikTok/Twitter/Facebook)에 따라 참여율 평균에 차이가 있습니까?\"",
+      "tag": "분산분석 (ANOVA)",
+      "answer": "플랫폼별 참여율 평균이 통계적으로 유의미하게 다릅니다(TikTok > Instagram > Twitter > LinkedIn > Facebook).",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"socialmedia_engagement.csv\" --request \"일일 화면 시청 시간과 정신건강 점수 사이에 선형 상관관계가 있습니까?\"",
+      "tag": "상관분석",
+      "answer": "화면 시청 시간과 정신건강 점수 사이에 중간 정도의 음의 상관관계가 있습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"socialmedia_engagement.csv\" --request \"성별과 인플루언서 상태 사이에 연관성이 있습니까?\"",
+      "tag": "카이제곱 독립성 검정",
+      "answer": "성별과 인플루언서 상태 간에는 통계적으로 유의미한 연관성이 없습니다.",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    },
+    {
+      "command": "python -m src.main --file \"socialmedia_engagement.csv\" --request \"팔로워 수 일일 게시물 수 화면 시청 시간이 정신건강 점수를 예측하는 모델이 유의미합니까?\"",
+      "tag": "다중회귀분석",
+      "answer": "화면 시청 시간과 일일 게시물 수가 정신건강 점수를 유의미하게 예측하는 변수입니다(R² = 0.519).",
+      "response": "상세 결과 섹션을 찾을 수 없습니다."
+    }
+  ]
+}

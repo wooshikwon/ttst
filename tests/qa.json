@@ -1,0 +1,144 @@
+{
+  "questions": [
+    {
+      "number": 1,
+      "dataset": "teachingratings.csv",
+      "question": "교수의 성별이 학생들의 평가 점수에 영향을 미치는지 궁금합니다.",
+      "answer": "p-value가 0.001로 유의수준 0.05보다 작기 때문에 귀무가설을 기각합니다. 이는 성별에 따라 평균 평가 점수에 차이가 있다는 증거가 됩니다. 'female' 변수의 계수는 -0.1680으로, 여성 교수가 남성 교수보다 0.168점 낮은 점수를 받는다는 것을 의미합니다.",
+      "test": "회귀 분석 (Regression Analysis)"
+    },
+    {
+      "number": 2,
+      "dataset": "teachingratings.csv",
+      "question": "교수의 나이대에 따라 외모 점수에 차이가 있는지 확인하고 싶습니다.",
+      "answer": "F-통계량에 대한 p-value(PR(>F))가 4.32e-08로 유의수준 0.05보다 작으므로 귀무가설을 기각합니다. 이는 적어도 한 연령 집단의 평균 외모 점수에 유의미한 차이가 있다는 것을 의미합니다.",
+      "test": "분산 분석 (ANOVA)"
+    },
+    {
+      "number": 3,
+      "dataset": "teachingratings.csv",
+      "question": "교수의 외모 점수와 학생들의 평가 점수 사이에 연관성이 있나요?",
+      "answer": "p-value가 0.05보다 작으므로(4.25e-05), 외모 점수와 평가 점수 사이에는 유의미한 상관관계가 있다는 증거가 됩니다.",
+      "test": "단순 선형 회귀분석 (Simple Linear Regression)"
+    },
+    {
+      "number": 4,
+      "dataset": "teachingratings.csv",
+      "question": "교수가 정규직인지 여부가 외모 점수에 영향을 주는지 알고 싶습니다.",
+      "answer": "p-value가 0.05보다 크므로 귀무가설을 기각하지 못합니다. 정규직 교수와 비정규직 교수의 평균 외모 점수 간에 유의미한 차이가 있다는 증거는 없습니다.",
+      "test": "독립표본 T-검정 (Independent Samples T-test)"
+    },
+    {
+      "number": 5,
+      "dataset": "teachingratings.csv",
+      "question": "영어를 모국어로 사용하는 교수와 그렇지 않은 교수 사이에 배정되는 총 학생 수에 차이가 있는지 확인해 주세요.",
+      "answer": "p-value는 0.063입니다. 유의수준 α = 0.05에서는 p-value가 더 크므로 귀무가설을 기각하지 못합니다. 하지만 유의수준 α = 0.1에서는 p-value가 더 작으므로 귀무가설을 기각하며, 영어가 모국어인지 여부에 따라 배정된 학생 수에 유의미한 차이가 있다고 결론 내릴 수 있습니다.",
+      "test": "회귀 분석 (Regression Analysis)"
+    },
+    {
+      "number": 6,
+      "dataset": "teachingratings.csv",
+      "question": "수업 평가에 참여한 학생 수가 많을수록 교수에 대한 평가 점수도 달라지나요?",
+      "answer": "R-제곱 값은 0.001이며, 이는 상관계수(R)가 약 0.03임을 의미합니다. 따라서 평가에 참여한 학생 수와 교수 평가 점수 사이에는 매우 약한 상관관계가 존재합니다.",
+      "test": "상관 분석 (Correlation Analysis)"
+    },
+    {
+      "number": 7,
+      "dataset": "teachingratings.csv",
+      "question": "교수의 성별에 따라 학생들이 매기는 평가 점수에 차이가 있는지 확인해 주세요.",
+      "answer": "p-value가 0.00124로 유의수준 0.05보다 작으므로 귀무가설을 기각합니다. 이는 성별에 따른 교수 평가 점수에 통계적으로 유의미한 차이가 있음을 나타냅니다.",
+      "test": "독립표본 T-검정 (Independent Samples T-test)"
+    },
+    {
+      "number": 8,
+      "dataset": "teachingratings.csv",
+      "question": "교수의 연령대별로 외모 점수에 차이가 있는지 알려주세요.",
+      "answer": "p-value가 4.32e-08로 유의수준 0.05보다 매우 작으므로 귀무가설을 기각합니다. 이는 적어도 하나의 연령 집단에서 평균 외모 점수에 유의미한 차이가 있음을 시사합니다.",
+      "test": "분산 분석 (ANOVA)"
+    },
+    {
+      "number": 9,
+      "dataset": "teachingratings.csv",
+      "question": "교수의 나이가 평가 점수에 영향을 미치는지, 연령대별로 차이가 있는지 확인해 주세요.",
+      "answer": "p-value가 0.295로 유의수준 0.05보다 크므로 귀무가설을 기각하지 못합니다. 연령대별 교수 평가 점수에는 통계적으로 유의미한 차이가 없습니다.",
+      "test": "분산 분석 (ANOVA)"
+    },
+    {
+      "number": 10,
+      "dataset": "teachingratings.csv",
+      "question": "교수의 정규직 여부와 성별 사이에 어떤 관계가 있는지 알 수 있을까요?",
+      "answer": "p-value가 0.137로 유의수준 0.05보다 크므로 귀무가설을 기각하지 못합니다. 따라서 정규직 여부와 성별 사이에는 통계적으로 유의미한 연관성이 없다고 결론 내릴 수 있습니다.",
+      "test": "카이제곱 검정 (Chi-squared Test)"
+    },
+    {
+      "number": 11,
+      "dataset": "teachingratings.csv",
+      "question": "교수의 외모와 학생들의 평가 점수는 서로 관련이 있을까요?",
+      "answer": "p-value가 4.25e-05로 유의수준 0.05보다 작으므로 귀무가설을 기각합니다. 이는 외모 점수와 교수 평가 점수 사이에 유의미한 상관관계가 존재함을 의미합니다.",
+      "test": "피어슨 상관분석 (Pearson Correlation)"
+    },
+    {
+      "number": 12,
+      "dataset": "teachingratings.csv",
+      "question": "정규직 교수와 비정규직 교수의 평가 점수 간에 차이가 있는지 궁금합니다.",
+      "answer": "T-검정 결과 p-value가 0.0052로 유의수준 0.05보다 작으므로, 귀무가설을 기각합니다. 정규직 여부는 교수 평가 점수에 영향을 미친다고 볼 수 있습니다.",
+      "test": "독립표본 T-검정 (Independent Samples T-test)"
+    },
+    {
+      "number": 13,
+      "dataset": "teachingratings.csv",
+      "question": "정규직 교수와 비정규직 교수의 외모 점수는 비슷한 수준으로 분포되어 있나요?",
+      "answer": "Levene 검정 결과 p-value가 0.485로 유의수준 0.05보다 크므로, 두 그룹의 분산은 같다고 가정할 수 있습니다.",
+      "test": "Levene의 등분산 검정 (Levene's Test for Equality of Variances)"
+    },
+    {
+      "number": 14,
+      "dataset": "iris.csv",
+      "question": "붓꽃의 종류에 따라 꽃받침의 평균 길이에 차이가 있나요?",
+      "answer": "분산분석(ANOVA) 결과 p-value는 0.05보다 매우 작게 나타납니다 (p < 0.001). 따라서 귀무가설을 기각하며, 세 붓꽃 종 간의 꽃받침 길이 평균에는 통계적으로 유의미한 차이가 있다고 결론 내릴 수 있습니다.",
+      "test": "분산 분석 (ANOVA)"
+    },
+    {
+      "number": 15,
+      "dataset": "titanic.csv",
+      "question": "타이타닉호에서 승객의 좌석 등급이 생존 여부와 관련이 있었을까요?",
+      "answer": "카이제곱 검정 결과 p-value는 0.05보다 매우 작습니다. 따라서 귀무가설(좌석 등급과 생존 여부는 독립이다)을 기각하고, 승객의 좌석 등급과 생존 여부 사이에는 통계적으로 유의미한 연관성이 있다고 결론 내릴 수 있습니다.",
+      "test": "카이제곱 검정 (Chi-squared Test)"
+    },
+    {
+      "number": 16,
+      "dataset": "tips.csv",
+      "question": "식당에서 흡연자와 비흡연자가 내는 팁 금액에 차이가 있는지 알고 싶습니다.",
+      "answer": "독립표본 T-검정 결과 p-value는 일반적으로 0.05보다 크게 나타납니다. 따라서 귀무가설을 기각하지 못하며, 흡연 여부에 따른 평균 팁 금액에 통계적으로 유의미한 차이가 있다고 보기 어렵습니다.",
+      "test": "독립표본 T-검정 (Independent Samples T-test)"
+    },
+    {
+      "number": 17,
+      "dataset": "mpg.csv",
+      "question": "자동차의 무게가 연비에 어떤 영향을 미치는지, 무게를 통해 연비를 예측할 수 있는지 알려주세요.",
+      "answer": "단순 선형 회귀분석 결과, 무게(weight) 변수의 회귀계수에 대한 p-value는 0.05보다 매우 작게 나타납니다. 따라서 귀무가설을 기각하며, 자동차의 무게는 연비를 예측하는 데 통계적으로 유의미한 변수입니다. 일반적으로 회귀계수는 음수 값을 가져, 무게가 무거울수록 연비가 낮아지는 음의 상관관계가 있음을 의미합니다.",
+      "test": "단순 선형 회귀분석 (Simple Linear Regression)"
+    },
+    {
+      "number": 18,
+      "dataset": "titanic.csv",
+      "question": "타이타닉호 승객의 성별과 생존 여부 사이에 연관성이 있는지 확인해 주세요.",
+      "answer": "카이제곱 검정 결과 p-value는 0.05보다 매우 작습니다. 따라서 귀무가설을 기각하며, 성별과 생존 여부 사이에는 매우 강한 통계적 연관성이 있다고 결론 내릴 수 있습니다.",
+      "test": "카이제곱 검정 (Chi-squared Test)"
+    },
+    {
+      "number": 19,
+      "dataset": "boston_housing.csv",
+      "question": "보스턴 지역에서 주택의 방 개수가 많을수록 가격도 높아지는지 궁금합니다.",
+      "answer": "단순 선형 회귀분석 결과, 평균 방 개수(RM) 변수의 회귀계수에 대한 p-value는 0.05보다 매우 작습니다. 따라서 방 개수는 주택 가격을 예측하는 데 통계적으로 유의미한 변수이며, 회귀계수는 양수 값을 가져 방 개수가 많을수록 주택 가격이 높아지는 경향을 보입니다.",
+      "test": "단순 선형 회귀분석 (Simple Linear Regression)"
+    },
+    {
+      "number": 20,
+      "dataset": "pima-indians-diabetes.csv",
+      "question": "당뇨병이 있는 사람과 없는 사람 사이에 공복 혈당 수치에 차이가 있나요?",
+      "answer": "독립표본 T-검정 결과 p-value가 0.05보다 매우 작으므로, 귀무가설을 기각합니다. 당뇨병 발병 여부에 따라 공복 혈당 수치 평균에 통계적으로 유의미한 차이가 있다고 결론 내릴 수 있습니다.",
+      "test": "독립표본 T-검정 (Independent Samples T-test)"
+    }
+  ]
+}
